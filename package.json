@@ -7,6 +7,7 @@
 		"dev": "nodemon app.js"
 	},
 	"dependencies": {
+		"@koa/cors": "^2.2.2",
 		"@types/koa-redis-cache": "^3.0.0",
 		"axios": "^0.18.0",
 		"koa": "^2.2.0",

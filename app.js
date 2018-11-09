@@ -10,7 +10,7 @@ var router = new Router();
 const { PORT = 8001 } = process.env;
 
 app.use(bodyParser());
-
+app.use(cors());
 app.use(
 	cache({
 		redis: {
