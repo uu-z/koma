@@ -3,6 +3,7 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const axios = require('axios');
 const cache = require("koa-redis-cache")
+const cors = require("@koa/cors")
 
 var app = new Koa();
 var router = new Router();
