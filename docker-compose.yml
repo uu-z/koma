@@ -24,6 +24,7 @@ services:
     - redis
   redis:
     image: redis:alpine
+    restart: always 
     networks: 
     - proxy
     ports: 
