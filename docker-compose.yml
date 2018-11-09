@@ -1,15 +1,39 @@
 version: '2'
 services:
-  web:
-    image: "node"
-    container_name: proxy
+  py:
+    image: "node:alpine"
     restart: always 
     working_dir: /home/node/app
     command: npm start
+    labels:
+    - traefik.backend=py
+    - traefik.frontend.rule=Host:py.yuyuko.me
+    - traefik.docker.network=proxy
+    - traefik.port=8001
     environment:
-      - PORT=8080
-    ports:
-     - "8080:8080"
+      - PORT=8001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     volumes:
      - ./:/home/node/app
-     
+    networks: 
+      - proxy
+    ports:
+    - 8001:8001
+    depends_on: 
+    - redis
+  redis:
+    image: redis:alpine
+    networks: 
+    - proxy
+    ports: 
+    - 6379:6379
+    volumes:
+        - redis-data:/data
+volumes:
+  redis-data:
+
+networks: 
+  proxy:
+    external: true
+
