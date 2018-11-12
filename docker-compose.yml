@@ -1,35 +1,37 @@
-version: '2'
+version: "2"
 services:
   py:
     image: "node:alpine"
-    restart: always 
+    restart: always
     working_dir: /home/node/app
     command: npm start
     environment:
       - PORT=8001
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+    labels:
+      - traefik.backend=py
+      - traefik.frontend.rule=Host:py.yuyuko.me
+      - traefik.docker.network=proxy
+      - traefik.port=8001
     volumes:
-     - ./:/home/node/app
-    networks: 
+      - ./:/home/node/app
+    networks:
       - proxy
     ports:
-    - 8001:8001
-    depends_on: 
-    - redis
+      - 8001:8001
+    depends_on:
+      - redis
   redis:
     image: redis:alpine
-    restart: always 
-    networks: 
-    - proxy
-    ports: 
-    - 6379:6379
+    restart: always
+    networks:
+      - proxy
     volumes:
-        - redis-data:/data
+      - redis-data:/data
 volumes:
   redis-data:
 
-networks: 
+networks:
   proxy:
     external: true
-
