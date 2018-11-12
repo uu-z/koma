@@ -5,11 +5,6 @@ services:
     restart: always 
     working_dir: /home/node/app
     command: npm start
-    labels:
-    - traefik.backend=py
-    - traefik.frontend.rule=Host:py.yuyuko.me
-    - traefik.docker.network=proxy
-    - traefik.port=8001
     environment:
       - PORT=8001
       - REDIS_HOST=redis
