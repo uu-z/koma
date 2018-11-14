@@ -1,7 +1,9 @@
-# koa-cahe-proxy
+# kom-advaned
+
+an advanced framework with koa & menhera
 
 ## Desc
-combind `model` `route` `controller` `services`... in just one module
+combind `model` `route` `controller` `services` ... in just one module
 ```js
 
 module.exports = {
