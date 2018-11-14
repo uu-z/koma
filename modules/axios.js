@@ -2,9 +2,6 @@ const axios = require("axios");
 
 module.exports = {
   name: "Axios",
-  mixouts: {
-    Axios: "Axios"
-  },
   routes: {
     "get /axios": "Axios.controllers.get",
     "post /axios": "Axios.controllers.post"

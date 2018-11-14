@@ -2,9 +2,6 @@ const axios = require("axios");
 
 module.exports = {
   name: "Index",
-  mixouts: {
-    Index: "Index"
-  },
   routes: {
     "get /": "Index.controllers.index"
   },
