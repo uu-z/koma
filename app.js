@@ -4,7 +4,7 @@ const {
   PORT = 8001,
   ES_ENABLE = false,
   REDIS_ENABLE = false,
-  MONGO_ENABLE = true,
+  MONGO_ENABLE = false,
   REDIS_HOST = "localhost",
   REDIS_PORT = "6379",
   MONGO_URL = "localhost:27017",
