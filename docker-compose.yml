@@ -1,6 +1,6 @@
 version: "2"
 services:
-  py:
+  server:
     image: "node:alpine"
     restart: always
     working_dir: /home/node/app
@@ -9,6 +9,11 @@ services:
       - PORT=8001
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MONGO_URL=mongo:27017
+      - MONGO_DATABASE=test
+      - ES_ENABLE=false
+      - REDIS_ENABLE=true
+      - MONGO_ENABLE=false
     labels:
       - traefik.backend=py
       - traefik.frontend.rule=Host:py.yuyuko.me
@@ -22,7 +27,8 @@ services:
       - 8001:8001
     depends_on:
       - redis
-      - elasticsearch
+      # - elasticsearch
+      # - mongo
   redis:
     image: redis:alpine
     restart: always
@@ -30,15 +36,27 @@ services:
       - proxy
     volumes:
       - redis-data:/data
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
-    networks:
-      - proxy
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+  #   networks:
+  #     - proxy
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
+  # mongo:
+  #   image: mongo
+  #   environment:
+  #     - MONGO_INITDB_DATABASE=test
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - proxy
+  #   volumes:
+  #     - "mongo-data:/data/db"
+  #   restart: always
 volumes:
   redis-data:
+  mongo-data:
 
 networks:
   proxy:

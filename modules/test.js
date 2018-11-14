@@ -1,11 +1,14 @@
 module.exports = {
   name: "Test",
+  mixouts: {
+    global: true,
+  },
   routes: {
     "get /hello": "Test.controllers.hello"
   },
   controllers: {
     async hello(ctx, next) {
-      await Mhr.Test.services.hello(ctx);
+      await this.services.hello(ctx);
     }
   },
   services: {

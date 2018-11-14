@@ -2,11 +2,20 @@ const axios = require("axios");
 
 module.exports = {
   name: "Axios",
+  mixouts: {
+    global: true,
+  },
   routes: {
-    "post /axios": "Axios.controllers.axios"
+    "get /axios": "Axios.controllers.get",
+    "post /axios": "Axios.controllers.post"
   },
   controllers: {
-    async axios(ctx, next) {
+    async get(ctx, next) {
+      const { url } = ctx.request.query;
+      let { data } = await axios.get(url);
+      ctx.body = data;
+    },
+    async post(ctx, next) {
       let { data } = await axios(ctx.request.body);
       ctx.body = data;
     }
