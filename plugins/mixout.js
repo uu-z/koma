@@ -4,14 +4,17 @@ module.exports = {
   name: "Mixout",
   $mixouts:{
     $({_key, _val, cp}){
-      let val = typeof _val == "string" ? _val : cp.name
-      let target
-      if(_key == 'global'){
-        target = global
-      } else {
-        target = _.get(global, _key)
+      if(_key == _val) {
+        let val = _.get(global, _val) || _.get(global.Mhr, _val)
+        _.set(global, _key,val)
+        return
       }
-      _.set(target, val, Mhr[cp.name])
+      Reflect.defineProperty(global, _key, {
+        get() {
+          let val = _.get(global, _val) || _.get(global.Mhr, _val)
+          return val
+        }
+      })
     }
   }
 }

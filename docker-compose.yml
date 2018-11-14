@@ -7,13 +7,13 @@ services:
     command: npm start
     environment:
       - PORT=8001
+      - REDIS_ENABLE=true
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MONGO_ENABLE=false
       - MONGO_URL=mongo:27017
       - MONGO_DATABASE=test
       - ES_ENABLE=false
-      - REDIS_ENABLE=true
-      - MONGO_ENABLE=false
     labels:
       - traefik.backend=py
       - traefik.frontend.rule=Host:py.yuyuko.me
@@ -43,17 +43,17 @@ services:
   #   ports:
   #     - "9200:9200"
   #     - "9300:9300"
-  # mongo:
-  #   image: mongo
-  #   environment:
-  #     - MONGO_INITDB_DATABASE=test
-  #   ports:
-  #     - "27017:27017"
-  #   networks:
-  #     - proxy
-  #   volumes:
-  #     - "mongo-data:/data/db"
-  #   restart: always
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=test
+    ports:
+      - "27017:27017"
+    networks:
+      - proxy
+    volumes:
+      - "mongo-data:/data/db"
+    restart: always
 volumes:
   redis-data:
   mongo-data:

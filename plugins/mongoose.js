@@ -38,6 +38,7 @@ module.exports = {
     async _({ _val }) {
       const { MONGO_URL, MONGO_DATABASE, MONGO_ENABLE } = _val;
       if(!MONGO_ENABLE) return
+      console.success("mongoose start~")
       let db = await mongoose.connect(`mongodb://${MONGO_URL}/${MONGO_DATABASE}`, {
         useNewUrlParser: true
       });

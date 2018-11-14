@@ -6,6 +6,7 @@ module.exports = {
     _({_val}){
       const {REDIS_ENABLE, REDIS_HOST, REDIS_PORT} = _val
       if(!REDIS_ENABLE) return
+      console.success("redis start~")
       Mhr.$use({
         use:[
           cache({
