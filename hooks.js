@@ -25,8 +25,8 @@ Mhr.$use({
     }
   },
   $routes: {
-    $({ _: mhr, _key, _val }) {
-      let fn = _.get(global, _val);
+    $({ _key, _val }) {
+      let fn = _.get(global, _val) || _.get(global.Mhr, _val);
       _.set(Mhr, `routes.${_key}`, _val)
       if (!fn) {
         console.warn(`${_key}: ${_val} not exists`);
@@ -37,9 +37,9 @@ Mhr.$use({
     }
   },
   $config: {
-    _({ _, _val }) {
+    _({ _val }) {
       const { PORT } = _val;
-      _.$use({
+      Mhr.$use({
         use: [router.routes(), router.allowedMethods()]
       });
       app.listen(PORT);

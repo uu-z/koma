@@ -1,8 +1,5 @@
 module.exports = {
   name: "Test",
-  mixouts: {
-    global: true,
-  },
   routes: {
     "get /hello": "Test.controllers.hello"
   },
