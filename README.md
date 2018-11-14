@@ -13,15 +13,16 @@ module.exports = {
   },
   controllers: {
     async hello(ctx, next) {
-      await this.services.hello(ctx);
+      ctx.body = await this.services.hello();
     }
   },
   services: {
-    async hello(ctx) {
-      ctx.body = "Hello World!";
+    async hello() {
+      return 'Hello World'
     }
   }
 };
+
 
 ```
 
