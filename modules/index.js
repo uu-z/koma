@@ -1,13 +1,11 @@
-const axios = require("axios");
+const Test = require("./test");
 
 module.exports = {
   name: "Index",
   routes: {
-    "get /": "Index.controllers.index"
+    "get /": "Index.controllers.test"
   },
   controllers: {
-    async index(ctx, next) {
-      ctx.body = ctx.request;
-    }
+    test: Test.controllers.hello.bind(Test)
   }
 };

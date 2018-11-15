@@ -1,13 +1,17 @@
 const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
+const jwt = require("koa-jwt");
+const config = require("../config");
 
 module.exports = {
   name: "Middlewares",
-  use:[
+  use: [
     bodyParser(),
     cors({
       origin: "*"
     }),
+    // passport.initialize(),
+    jwt({ secret: config.JWT_SECRET, passthrough: true }),
     async (ctx, next) => {
       const start = new Date();
       await next();
@@ -15,15 +19,16 @@ module.exports = {
       console.info(`-> ${ctx.method} ${ctx.url} - ${ms}ms`);
     },
     async (ctx, next) => {
-      try {
-        await next();
-      } catch (err) {
-        console.error(err);
-        ctx.status = err.statusCode || err.status || 500;
-        ctx.body = {
-          message: err.message
-        };
-      }
+      return next().catch(err => {
+        if (err.status === 401) {
+          ctx.status = 401;
+          ctx.body = {
+            error: err.originalError ? err.originalError.message : err.message
+          };
+        } else {
+          throw err;
+        }
+      });
     }
   ]
-}
+};

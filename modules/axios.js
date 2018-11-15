@@ -1,5 +1,7 @@
 const axios = require("axios");
 
+exports.name = "123";
+
 module.exports = {
   name: "Axios",
   routes: {

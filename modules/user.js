@@ -1,87 +1,71 @@
-const _ = require("lodash")
-const bcrypt = require("mongoose-bcrypt")
+const { utils } = require("../plugins/utils");
+const compose = require("koa-compose");
+const passport = require("koa-passport");
+const _ = require("lodash");
+const Joi = require("joi");
+const validate = require("koa-joi-validate");
 
-
-module.exports = {
+const User = {
   name: "User",
-  mixouts: {
-    User: "User",
-    UserModel: "User.models.User.model",
-    Userschema: "User.models.User.schema"
-  },
   routes: {
-    "post /users": "User.controllers.create",
     "get /users/:_id": "User.controllers.findOne",
-    "put /users/:_id": "User.controllers.update",
     "get /users": "User.controllers.list",
+    "get /me": "User.controllers.me",
+    "post /signup": "User.controllers.signUp",
+    "post /login": {
+      validator: "User.validators.login",
+      handler: "User.controllers.login"
+    },
+    "put /users/:_id": "User.controllers.update"
+  },
+  validators: {
+    login: validate({
+      body: {
+        identifier: Joi.string().required(),
+        password: Joi.string().required()
+      }
+    })
   },
   controllers: {
-    async create(ctx,next){
-      ctx.body = await User.services.add(ctx.request.body)
+    async signUp(ctx, next) {
+      ctx.body = await utils.create("User", ctx.request.body);
     },
-    async list(ctx,next) {
-      ctx.body = await User.services.fetchAll(ctx.query)
+    async list(ctx, next) {
+      const params = ctx.query;
+      for (let [k, v] of Object.entries(params)) {
+        params[k] = JSON.parse(v);
+      }
+      ctx.body = await utils.paginate("User", params.query || {}, params.paginate || {});
     },
-    async findOne(ctx,next){
-      if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
-      ctx.body = await User.services.fetch(ctx.params)
+    async findOne(ctx) {
+      if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
+      ctx.body = await utils.findOne("User", ctx.query);
     },
-    async update(ctx,next){
-      await User.services.edit(ctx.params, ctx.request.body)
-      ctx.body = await User.services.fetch(ctx.params)
+    async update(ctx) {
+      await utils.updateOne("User", ctx.query, ctx.request.body);
+      ctx.body = await utils.findOne("User", ctx.query);
+    },
+    async login(ctx) {
+      const { identifier, password } = ctx.request.body;
+      const user = await utils
+        .findOne("User", { $or: [{ email: identifier }, { username: identifier }] })
+        .select("+password");
+      if (!user) {
+        return ctx.notFound;
+      }
+      const validPassword = await user.verifyPassword(password);
+      if (validPassword) {
+        delete user.password;
+        ctx.body = { user, token: utils.signJWT({ data: user._id }) };
+      } else {
+        ctx.throw(401, "invalid username or password");
+      }
+    },
+    async me(ctx) {
+      const userId = _.get(ctx.state, "user.data");
+      ctx.body = await utils.findOne("User", { _id: userId });
     }
   },
-  services:{
-    async add(values){
-      const data = _.pick(values, _.keys(Userschema))
-      return await UserModel.create(data)
-    },
-    async fetch(params){
-      return await UserModel.findOne(params)
-    },
-    async fetchAll(params){
-      for(let [k,v] of Object.entries(params)){
-        params[k] = JSON.parse(v)
-      }
-      return await UserModel.paginate(params.query || {}, params.paginate || {})
-    },
-    async edit(params, values){
-      const data = _.pick(values, _.keys(Userschema))
-      return await UserModel.update(params, data)
-    }
-  },
-  models: {
-    User: {
-      schema: {
-        username: {
-          type: 'string',
-          default: null
-        },
-        email: {
-          type: 'string',
-          required: true,
-          unique: true
-        },
-        password: {
-          type: "string",
-          select: false,
-          required: true,
-          bcrypt: true
-        },
-        secret:{
-          type: "string",
-          bcrypt: true
-        }
-      },
-      plugins: [bcrypt],
-      set:{
-        toJSON:{
-          transform(doc,ret,opt){
-            delete ret['password']
-            return ret
-          }
-        }
-      }
-    }
-  }
+  services: {}
 };
+module.exports = User;
