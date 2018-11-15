@@ -1,7 +1,7 @@
 const Test = {
   name: "Test",
   routes: {
-    "get /hello": "Test.controllers.hello"
+    "get /hello": "hello"
   },
   controllers: {
     async hello(ctx) {

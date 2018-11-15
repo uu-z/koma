@@ -3,7 +3,7 @@ const Test = require("./test");
 module.exports = {
   name: "Index",
   routes: {
-    "get /": "Index.controllers.test"
+    "get /": "test"
   },
   controllers: {
     test: Test.controllers.hello.bind(Test)

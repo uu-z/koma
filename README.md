@@ -15,18 +15,18 @@ const { utils } = require("../plugins/utils");
 const User = {
   name: "User",
   routes: {
-    "get /users/:_id": "User.controllers.findOne",
-    "get /users": "User.controllers.list",
+    "get /users/:_id": "findUser",
+    "get /users": "listUser",
     "get /me": {
-      validator: "User.validators.token",
-      handler: "User.controllers.me"
+      validators: "token",
+      controllers: "me"
     },
-    "post /signup": "User.controllers.signUp",
+    "post /signup": "signUp",
     "post /login": {
-      validator: "User.validators.login",
-      handler: "User.controllers.login"
+      validators: "login",
+      controllers: "login"
     },
-    "put /users/:_id": "User.controllers.update"
+    "put /users/:_id": "updateUser"
   },
   validators: {
     token: validate({
@@ -45,14 +45,14 @@ const User = {
     async signUp(ctx, next) {
       ctx.body = await utils.create("User", ctx.request.body);
     },
-    async list(ctx, next) {
+    async listUser(ctx, next) {
       const params = ctx.query;
       for (let [k, v] of Object.entries(params)) {
         params[k] = JSON.parse(v);
       }
       ctx.body = await utils.paginate("User", params.query || {}, params.paginate || {});
     },
-    async findOne(ctx) {
+    async findUser(ctx) {
       if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
       ctx.body = await utils.findOne("User", ctx.query);
     },

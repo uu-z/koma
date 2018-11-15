@@ -5,16 +5,16 @@ exports.name = "123";
 module.exports = {
   name: "Axios",
   routes: {
-    "get /axios": "Axios.controllers.get",
-    "post /axios": "Axios.controllers.post"
+    "get /axios": "proxyGet",
+    "post /axios": "proxyPost"
   },
   controllers: {
-    async get(ctx, next) {
+    async proxyGet(ctx, next) {
       const { url } = ctx.request.query;
       let { data } = await axios.get(url);
       ctx.body = data;
     },
-    async post(ctx, next) {
+    async proxyPost(ctx, next) {
       let { data } = await axios(ctx.request.body);
       ctx.body = data;
     }

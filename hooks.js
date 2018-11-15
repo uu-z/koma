@@ -4,7 +4,7 @@ const _ = require("lodash");
 const requireDir = require("require-dir");
 const Mhr = require("menhera").default;
 const compose = require("koa-compose");
-const validate = require("koa-joi-validate");
+const { utils } = require("./plugins/utils");
 
 global.Mhr = Mhr;
 
@@ -24,13 +24,20 @@ Mhr.$use({
       }
     }
   },
+  $validators: utils.injectObject("validators"),
+  $controllers: utils.injectObject("controllers"),
   $routes: {
     $({ _key, _val }) {
       let fn;
       if (typeof _val == "string") {
-        fn = _.get(global, _val) || _.get(global.Mhr, _val);
+        fn = _.get(Mhr, `controllers.${_val}`);
       } else if (typeof _val == "object") {
-        fn = compose(_.values(_val).map(target => _.get(global, target) || _.get(global.Mhr, target)));
+        const fns = _.chain(_val)
+          .mapKeys((v, k) => `${k}.${v}`)
+          .keys()
+          .map(v => _.get(Mhr, v))
+          .value();
+        fn = compose(fns);
       }
       _.set(Mhr, `routes.${_key}`, _val);
       if (!fn) {
@@ -58,8 +65,11 @@ Mhr.$use({
 });
 
 const modules = requireDir("./modules");
+
 Mhr.$use({
-  _mount: _.values(modules)
+  _mount: utils.parseModule(modules, {
+    queue: ["name", "controllers", "validators", "models", "services", "routes"]
+  })
 });
 
 module.exports = Mhr;

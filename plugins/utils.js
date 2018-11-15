@@ -35,6 +35,20 @@ const utils = {
     paginate(name, query, paginate) {
       const { model } = Mhr.models[name];
       return model.paginate(query, paginate);
+    },
+    // Utils
+    injectObject(name) {
+      return {
+        _({ _val }) {
+          let target = _.get(Mhr, name, {});
+          _.set(Mhr, name, { ...target, ..._val });
+        }
+      };
+    },
+    parseModule(modules, { queue }) {
+      return _.chain(modules)
+        .map((v, k) => _.pick(v, queue))
+        .value();
     }
   }
 };
