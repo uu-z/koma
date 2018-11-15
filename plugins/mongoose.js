@@ -11,7 +11,7 @@ paginate.options = {
   limit: 20
 };
 
-const globalPlugins = [hidden, autopopulate, uniqueValidator, paginate];
+const globalPlugins = [bcrypt, hidden, autopopulate, uniqueValidator, paginate];
 globalPlugins.forEach(plugin => {
   mongoose.plugin(plugin);
 });
@@ -38,34 +38,6 @@ module.exports = {
         model
       });
       _.set(Mhr, `models.${_key}`, _val);
-    }
-  },
-  models: {
-    User: {
-      schema: {
-        username: {
-          type: "string",
-          default: null
-        },
-        email: {
-          type: "string",
-          required: true,
-          unique: true
-        },
-        password: {
-          type: "string",
-          select: false,
-          required: true,
-          bcrypt: true,
-          hidden: true
-        },
-        secret: {
-          type: "string",
-          bcrypt: true
-        }
-      },
-      plugins: [bcrypt],
-      methods: {}
     }
   },
   async $config({ _val }) {

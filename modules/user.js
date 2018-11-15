@@ -66,6 +66,32 @@ const User = {
       ctx.body = await utils.findOne("User", { _id: userId });
     }
   },
-  services: {}
+  services: {},
+  models: {
+    User: {
+      schema: {
+        username: {
+          type: "string",
+          default: null
+        },
+        email: {
+          type: "string",
+          required: true,
+          unique: true
+        },
+        password: {
+          type: "string",
+          select: false,
+          required: true,
+          bcrypt: true,
+          hidden: true
+        },
+        secret: {
+          type: "string",
+          bcrypt: true
+        }
+      }
+    }
+  }
 };
 module.exports = User;
