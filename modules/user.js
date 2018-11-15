@@ -1,16 +1,17 @@
-const { utils } = require("../plugins/utils");
-const compose = require("koa-compose");
-const passport = require("koa-passport");
 const _ = require("lodash");
 const Joi = require("joi");
 const validate = require("koa-joi-validate");
+const { utils } = require("../plugins/utils");
 
 const User = {
   name: "User",
   routes: {
     "get /users/:_id": "User.controllers.findOne",
     "get /users": "User.controllers.list",
-    "get /me": "User.controllers.me",
+    "get /me": {
+      validator: "User.validators.token",
+      handler: "User.controllers.me"
+    },
     "post /signup": "User.controllers.signUp",
     "post /login": {
       validator: "User.validators.login",
@@ -19,6 +20,11 @@ const User = {
     "put /users/:_id": "User.controllers.update"
   },
   validators: {
+    token: validate({
+      headers: {
+        authorization: Joi.string().required()
+      }
+    }),
     login: validate({
       body: {
         identifier: Joi.string().required(),
