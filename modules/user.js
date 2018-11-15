@@ -47,7 +47,7 @@ const User = {
       if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
       ctx.body = await utils.findOne("User", ctx.query);
     },
-    async update(ctx) {
+    async updateUser(ctx) {
       await utils.updateOne("User", ctx.query, ctx.request.body);
       ctx.body = await utils.findOne("User", ctx.query);
     },

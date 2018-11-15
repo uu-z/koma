@@ -6,6 +6,6 @@ module.exports = {
     "get /": "test"
   },
   controllers: {
-    test: Test.controllers.hello.bind(Test)
+    test: Test.controllers.hello
   }
 };
