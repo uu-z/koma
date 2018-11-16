@@ -27,13 +27,15 @@ services:
       - 8001:8001
     depends_on:
       - redis
+      - mongo
       # - elasticsearch
-      # - mongo
   redis:
     image: redis:alpine
     restart: always
     networks:
       - proxy
+    ports:
+      - 6379:6379
     volumes:
       - redis-data:/data
   # elasticsearch:

@@ -31,7 +31,7 @@ module.exports = {
           io.on(key, val);
         });
 
-        console.success("socket.io start~~~");
+        console.success("socket server start~~~");
       }
       if (config.SOCkET_IO_CLIENT_ENABLE) {
         this.ScoketUtils.ClientTest();
