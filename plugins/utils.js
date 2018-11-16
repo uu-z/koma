@@ -1,6 +1,8 @@
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const monngose = require("mongoose");
+const requireDir = require("require-dir");
+const path = require("path");
 
 const utils = {
   name: "utils",
@@ -48,6 +50,9 @@ const utils = {
           _.set(Mhr, name, { ...target, ..._val });
         }
       };
+    },
+    loadPlugins(dir) {
+      return { _mount: _.values(requireDir(path.join(process.cwd(), dir))) };
     }
   }
 };
