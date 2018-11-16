@@ -1,10 +1,10 @@
 # kom-advaned
 
-an advanced framework with koa & menhera
+An advanced framework based on easy maintenance
 
 ## Desc
 
-combind `model` `route` `controller` `services` ... in just one module
+combind `model` `route` `controller` `services` `validators`... everything you want in just one module
 
 ```js
 const _ = require("lodash");
