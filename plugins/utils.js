@@ -1,5 +1,6 @@
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
+const monngose = require("mongoose");
 
 const utils = {
   name: "utils",
@@ -16,24 +17,27 @@ const utils = {
     },
     // Model
     convertParams(name, values) {
-      const { schema } = Mhr.models[name];
-      return _.pick(values, _.keys(schema));
+      const model = monngose.models[name];
+      return _.pick(values, _.keys(model.schema));
+    },
+    model(name) {
+      return monngose.models[name];
     },
     create(name, params) {
-      const { model } = Mhr.models[name];
+      const model = monngose.models[name];
       return model.create(params);
     },
     findOne(name, params) {
-      const { model } = Mhr.models[name];
+      const model = monngose.models[name];
       return model.findOne(params);
     },
     updateOne(name, query, values) {
       const data = utils.convertParams(name, values);
-      const { model } = Mhr.models[name];
+      const model = monngose.models[name];
       return model.updateOne(query, data);
     },
     paginate(name, query, paginate) {
-      const { model } = Mhr.models[name];
+      const model = monngose.models[name];
       return model.paginate(query, paginate);
     },
     // Utils
