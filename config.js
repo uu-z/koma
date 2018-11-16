@@ -11,5 +11,5 @@ module.exports = {
   JWT_SECRET: process.env.JWT_SECRET || "secret",
   JWT_EXP: process.env.JWT_EXP || Math.floor(Date.now() / 1000) + 60 * 60 * 12,
   SOCKET_IO_ENABLE: process.env.SOCKET_IO_ENABLE || true,
-  SOCkET_IO_CLIENT_ENABLE: process.env.SOCkET_IO_CLIENT_ENABLE || true
+  SOCKET_IO_CLIENT_ENABLE: process.env.SOCKET_IO_CLIENT_ENABLE || true
 };

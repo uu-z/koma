@@ -33,7 +33,7 @@ module.exports = {
 
         console.success("socket server start~~~");
       }
-      if (config.SOCkET_IO_CLIENT_ENABLE) {
+      if (config.SOCKET_IO_CLIENT_ENABLE) {
         this.ScoketUtils.ClientTest();
       }
     },
