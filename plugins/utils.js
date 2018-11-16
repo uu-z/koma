@@ -44,11 +44,6 @@ const utils = {
           _.set(Mhr, name, { ...target, ..._val });
         }
       };
-    },
-    parseModule(modules, { queue }) {
-      return _.chain(modules)
-        .map((v, k) => _.pick(v, queue))
-        .value();
     }
   }
 };

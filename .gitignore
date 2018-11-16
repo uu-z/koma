@@ -41,3 +41,6 @@ jspm_packages
 
 # temp
 .tmp/
+
+# dev
+admin
