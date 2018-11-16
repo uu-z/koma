@@ -1,4 +1,4 @@
-# kom-advaned
+# koma
 
 An advanced framework based on easy maintenance
 
