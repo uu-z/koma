@@ -51,7 +51,7 @@ module.exports = {
         useNewUrlParser: true
       }
     );
-    console.success("mongodb start~");
+    console.success("mongodb start~~~");
     this.db = db;
   }
 };

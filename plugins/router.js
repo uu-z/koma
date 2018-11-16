@@ -11,10 +11,7 @@ module.exports = {
   $routes: utils.injectObject("routes"),
   RouterUtils: {
     InjectRoutes({ app }) {
-      const routes = _.get(Mhr, "routes");
-      if (!routes) {
-        return console.error("invalid routes");
-      }
+      const routes = _.get(Mhr, "routes", {});
       _.each(routes, (val, key) => {
         let fn;
         if (typeof val == "string") {

@@ -1,5 +1,7 @@
 const Koa = require("koa");
+const http = require("http");
 const { RouterUtils } = require("./router");
+const { ScoketUtils } = require("./socket");
 
 const app = new Koa();
 
@@ -15,7 +17,9 @@ module.exports = {
     const { PORT } = _val;
     Mhr.configs = _val;
     RouterUtils.InjectRoutes({ app });
-    app.listen(PORT);
+    const server = http.createServer(app.callback());
+    ScoketUtils.InjectSocket({ server });
+    server.listen(PORT);
     console.success(`Server listening on port ${PORT}...`);
   }
 };
