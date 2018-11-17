@@ -1,6 +1,5 @@
 const _ = require("lodash");
 const Joi = require("joi");
-const validate = require("koa-joi-validate");
 const { utils } = require("../plugins/utils");
 
 const User = {
