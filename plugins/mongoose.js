@@ -40,18 +40,20 @@ module.exports = {
       _.set(Mhr, `models.${_key}`, _val);
     }
   },
-  async $config({ _val }) {
-    const { MONGO_URL, MONGO_DATABASE, MONGO_ENABLE } = _val;
-    if (!MONGO_ENABLE) return;
+  $start: {
+    async config({ _val }) {
+      const { MONGO_URL, MONGO_DATABASE, MONGO_ENABLE } = _val;
+      if (!MONGO_ENABLE) return;
 
-    let db = await mongoose.connect(
-      `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,
-      {
-        useCreateIndex: true,
-        useNewUrlParser: true
-      }
-    );
-    console.success("mongodb start~~~");
-    this.db = db;
+      let db = await mongoose.connect(
+        `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,
+        {
+          useCreateIndex: true,
+          useNewUrlParser: true
+        }
+      );
+      console.success("mongodb start~~~");
+      this.db = db;
+    }
   }
 };

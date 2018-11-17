@@ -7,4 +7,6 @@ global.Mhr = Mhr;
 Mhr.$use(utils.load("./core"))
   .$use(utils.load("./plugins"))
   .$use(utils.load("./modules"))
-  .$use({ config });
+  .$use({
+    start: { config }
+  });

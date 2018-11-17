@@ -9,6 +9,11 @@ exports.router = router;
 module.exports = {
   name: "Router",
   $routes: utils.injectObject("routes"),
+  $start: {
+    app({ _val: app }) {
+      this.RouterUtils.InjectRoutes({ app });
+    }
+  },
   RouterUtils: {
     InjectRoutes({ app }) {
       const routes = _.get(Mhr, "routes", {});

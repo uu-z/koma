@@ -7,12 +7,12 @@ services:
     command: npm start
     environment:
       - PORT=8001
-      - REDIS_ENABLE=true
+      - REDIS_CACHE_ENABLE=true
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - MONGO_URL=mongo:27017
       - MONGO_DATABASE=test
-      - MONGO_ENABLE=false
+      - MONGO_ENABLE=
     labels:
       - traefik.backend=py
       - traefik.frontend.rule=Host:py.yuyuko.me

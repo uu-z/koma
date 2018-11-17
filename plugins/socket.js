@@ -7,7 +7,6 @@ const { utils } = require("./utils");
 const io = new IO({
   namespace: "/"
 });
-const options = {};
 let client; // just for testing
 
 module.exports = {
@@ -20,6 +19,11 @@ module.exports = {
       async connect(ctx) {
         console.info("server: ", ctx);
       }
+    }
+  },
+  $start: {
+    server({ _val: server }) {
+      this.ScoketUtils.InjectSocket({ server });
     }
   },
   ScoketUtils: {
@@ -38,7 +42,7 @@ module.exports = {
       }
     },
     ClientTest() {
-      client = IO_Client(`http://localhost:${config.PORT}`);
+      client = IO_Client(`http://${config.HOST}:${config.PORT}`);
       client.on("connect", () => {
         console.info("client:", "connected");
       });

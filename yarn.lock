@@ -149,6 +149,11 @@
   resolved "http://registry.npm.taobao.org/@types/mime/download/@types/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
   integrity sha1-WnMG42fFObn2VDSZ3o3VGfrDeos=
 
+"@types/minimist@^1.2.0":
+  version "1.2.0"
+  resolved "http://registry.npmjs.org/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
+  integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
+
 "@types/mongodb@*":
   version "3.1.14"
   resolved "https://registry.npmjs.org/@types/mongodb/-/mongodb-3.1.14.tgz#979335f89725b30eeb2e6719562ee9173e7a9ad9"
@@ -560,6 +565,18 @@ bytes@3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.taobao.org/bytes/download/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
 
+cac@^5.0.15:
+  version "5.0.15"
+  resolved "https://registry.npmjs.org/cac/-/cac-5.0.15.tgz#01fb2de24d8fc81050e4ec6ee1fe2b81003431ad"
+  integrity sha512-8jTquyS9whajPHyT34giTxj3dUtim/+g01/3A7nJ2YPlat9O5SjsQ0hynF3lZp0+Pe7f9dh571jyDYBM9gVFdw==
+  dependencies:
+    chalk "^2.4.1"
+    joycon "^2.1.2"
+    minimost "^1.2.0"
+    redent "^2.0.0"
+    string-width "^2.1.1"
+    text-table "^0.2.0"
+
 cache-base@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/cache-base/download/cache-base-1.0.1.tgz#0a7f46416831c8b662ee36fe4e7c59d76f666ab2"
@@ -627,7 +644,7 @@ chalk@^1.0.0:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.0.1, chalk@^2.3.1, chalk@^2.3.2:
+chalk@^2.0.1, chalk@^2.3.1, chalk@^2.3.2, chalk@^2.4.1:
   version "2.4.1"
   resolved "http://registry.npm.taobao.org/chalk/download/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
   integrity sha1-GMSasWoDe26wFSzIPjRxM4IVtm4=
@@ -1990,6 +2007,11 @@ joi@^14.0.6:
     isemail "3.x.x"
     topo "3.x.x"
 
+joycon@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/joycon/-/joycon-2.1.2.tgz#565739af7d07b844834c799c1630a9ffab75044e"
+  integrity sha512-nJlP8JLfIgArXcipjcqEk49nv91FFEsC+yK9fAGF5vAGKEnFrmFpcSwUK7Yu6qBY1ri1Ae7M6XWAZugFQmQBaQ==
+
 json-parse-better-errors@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
@@ -2404,7 +2426,7 @@ memory-pager@^1.0.2:
 
 menhera-cli@^0.3.1-rc4:
   version "0.3.6"
-  resolved "http://registry.npm.taobao.org/menhera-cli/download/menhera-cli-0.3.6.tgz#7383cb756b5d02ad40d7140b6cac12401aa49d0f"
+  resolved "https://registry.npmjs.org/menhera-cli/-/menhera-cli-0.3.6.tgz#7383cb756b5d02ad40d7140b6cac12401aa49d0f"
   integrity sha1-c4PLdWtdAq1A1xQLbKwSQBqknQ8=
   dependencies:
     "@types/koa-compose" "^3.2.2"
@@ -2436,20 +2458,20 @@ menhera-utils@^0.0.1:
     menhera "^0.7.2"
     menhera-cli "^0.3.1-rc4"
 
-menhera@^0.7.1-rc, menhera@^0.7.2:
-  version "0.7.7"
-  resolved "http://registry.npm.taobao.org/menhera/download/menhera-0.7.7.tgz#cd8f4f9fab8a6a33959d11175968dc18045152ea"
-  integrity sha1-zY9Pn6uKajOVnREXWWjcGARRUuo=
+menhera@0.8.4:
+  version "0.8.4"
+  resolved "https://registry.npmjs.org/menhera/-/menhera-0.8.4.tgz#604959658ba69bdecc738f8f46a594fe7cb3dd66"
+  integrity sha512-3EAYOwDGy6LSxnpKRjv+/ISjPLsNZXtzy5j2EtJ/I0XBROL/mt1nHggJeLZ/vezflG+Pfx+h4jJ43WHfNaWlNg==
   dependencies:
     lodash.get "^4.4.2"
     lodash.has "^4.5.2"
     lodash.set "^4.3.2"
     uuid "^3.2.1"
 
-menhera@^0.8.3-rc1:
-  version "0.8.3-rc1"
-  resolved "https://registry.npmjs.org/menhera/-/menhera-0.8.3-rc1.tgz#e6f67c19f63a37da1acc96cda4f03b8f369c759e"
-  integrity sha512-vleKyNSqZNmKDCw7+zkuoc5a2NQRsgYDGjADemQ9o9mRjGqfKfpV4I6n7bjsqU/xd5L5pHPJDX5r4mKUOsL63g==
+menhera@^0.7.1-rc, menhera@^0.7.2:
+  version "0.7.7"
+  resolved "http://registry.npm.taobao.org/menhera/download/menhera-0.7.7.tgz#cd8f4f9fab8a6a33959d11175968dc18045152ea"
+  integrity sha1-zY9Pn6uKajOVnREXWWjcGARRUuo=
   dependencies:
     lodash.get "^4.4.2"
     lodash.has "^4.5.2"
@@ -2522,6 +2544,14 @@ minimist@^1.2.0:
   version "1.2.0"
   resolved "http://registry.npm.taobao.org/minimist/download/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
+
+minimost@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/minimost/-/minimost-1.2.0.tgz#a37f91d60395fc003180d208ca9e0316bcc4e3a2"
+  integrity sha512-/+eWyOtXw41WIUV9rBgrXna11bxbqymebSeW2arsfp/MCGCwe+2czzsOueEtLZgH4xb4QXhje5H9MLCsCPibLA==
+  dependencies:
+    "@types/minimist" "^1.2.0"
+    minimist "^1.2.0"
 
 minipass@^2.2.1, minipass@^2.3.4:
   version "2.3.5"
@@ -3233,6 +3263,14 @@ readdirp@^2.0.0:
     micromatch "^3.1.10"
     readable-stream "^2.0.2"
 
+redent@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/redent/-/redent-2.0.0.tgz#c1b2007b42d57eb1389079b3c8333639d5e1ccaa"
+  integrity sha1-wbIAe0LVfrE4kHmzyDM2OdXhzKo=
+  dependencies:
+    indent-string "^3.0.0"
+    strip-indent "^2.0.0"
+
 redis-commands@^1.2.0:
   version "1.4.0"
   resolved "http://registry.npm.taobao.org/redis-commands/download/redis-commands-1.4.0.tgz#52f9cf99153efcce56a8f86af986bd04e988602f"
@@ -3686,6 +3724,11 @@ strip-eof@^1.0.0:
   resolved "http://registry.npm.taobao.org/strip-eof/download/strip-eof-1.0.0.tgz#bb43ff5598a6eb05d89b59fcd129c983313606bf"
   integrity sha1-u0P/VZim6wXYm1n80SnJgzE2Br8=
 
+strip-indent@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/strip-indent/-/strip-indent-2.0.0.tgz#5ef8db295d01e6ed6cbf7aab96998d7822527b68"
+  integrity sha1-XvjbKV0B5u1sv3qrlpmNeCJSe2g=
+
 strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.taobao.org/strip-json-comments/download/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
@@ -3742,6 +3785,11 @@ term-size@^1.2.0:
   integrity sha1-RYuDiH8oj8Vtb/+/rSYuJmOO+mk=
   dependencies:
     execa "^0.7.0"
+
+text-table@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
+  integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
 through@2, through@^2.3.6, through@^2.3.8, through@~2.3, through@~2.3.4:
   version "2.3.8"

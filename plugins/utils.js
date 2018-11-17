@@ -14,7 +14,7 @@ const utils = {
   utils: {
     // Token
     signJWT({ data }) {
-      const { JWT_EXP, JWT_SECRET } = Mhr.configs;
+      const { JWT_EXP, JWT_SECRET } = Mhr.config;
       return jwt.sign({ data, exp: JWT_EXP }, JWT_SECRET);
     },
     // Model

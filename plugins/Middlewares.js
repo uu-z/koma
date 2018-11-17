@@ -19,16 +19,15 @@ module.exports = {
       console.info(`-> ${ctx.method} ${ctx.url} - ${ms}ms`);
     },
     async (ctx, next) => {
-      return next().catch(err => {
-        if (err.status === 401) {
-          ctx.status = 401;
-          ctx.body = {
-            error: err.originalError ? err.originalError.message : err.message
-          };
-        } else {
-          throw err;
-        }
-      });
+      try {
+        await next();
+      } catch (err) {
+        console.error(err.message);
+        ctx.status = err.statusCode || err.status || 500;
+        ctx.body = {
+          message: err.message
+        };
+      }
     }
   ]
 };
