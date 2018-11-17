@@ -20,12 +20,12 @@ const User = {
     "put /users/:_id": "updateUser"
   },
   validators: {
-    token: validate({
+    token: () => ({
       headers: {
         authorization: Joi.string().required()
       }
     }),
-    login: validate({
+    login: () => ({
       body: {
         identifier: Joi.string().required(),
         password: Joi.string().required()

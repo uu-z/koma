@@ -51,6 +51,14 @@ const utils = {
         }
       };
     },
+    injectArray(name) {
+      return {
+        _({ _val }) {
+          let target = _.get(Mhr, name, []);
+          _.set(Mhr, name, [...target, ..._val]);
+        }
+      };
+    },
     loadPlugins(dir) {
       return { _mount: _.values(requireDir(path.join(process.cwd(), dir))) };
     }
