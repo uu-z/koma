@@ -59,7 +59,7 @@ const utils = {
         }
       };
     },
-    loadPlugins(dir) {
+    load(dir) {
       return { _mount: _.values(requireDir(path.join(process.cwd(), dir))) };
     }
   }
