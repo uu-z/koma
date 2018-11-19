@@ -12,9 +12,9 @@ const {
   MONGO_DATABASE = "test",
   JWT_SECRET = "secred",
   JWT_EXP = Math.floor(Date.now() / 1000) + 60 * 60 * 12,
-  SOCKET_IO_ENABLE = true,
+  SOCKET_IO_ENABLE = false,
   SOCKET_IO_CLIENT_ENABLE = false,
-  CLI_ENABLE = true
+  CLI_ENABLE = false
 } = process.env;
 
 module.exports = {

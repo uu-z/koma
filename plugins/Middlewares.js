@@ -10,7 +10,6 @@ module.exports = {
     cors({
       origin: "*"
     }),
-    // passport.initialize(),
     jwt({ secret: config.JWT_SECRET, passthrough: true }),
     async (ctx, next) => {
       const start = new Date();

@@ -8,7 +8,12 @@ const router = new Router();
 exports.router = router;
 module.exports = {
   name: "Router",
-  $routes: utils.injectObject("routes"),
+  $routes: {
+    $({ _key, _val }) {
+      _val = typeof _val == "object" ? _val : { controllers: _val };
+      _.set(Mhr, `routes.${_key}`, _val);
+    }
+  },
   $start: {
     app({ _val: app }) {
       this.RouterUtils.InjectRoutes({ app });

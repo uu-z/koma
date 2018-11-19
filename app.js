@@ -1,6 +1,7 @@
 const Mhr = require("menhera").default;
 const config = require("./config");
 const { utils } = require("./plugins/utils");
+const requireDir = require("require-dir");
 
 global.Mhr = Mhr;
 

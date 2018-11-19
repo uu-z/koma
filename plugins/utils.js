@@ -60,7 +60,15 @@ const utils = {
       };
     },
     load(dir) {
-      return { _mount: _.values(requireDir(path.join(process.cwd(), dir))) };
+      return {
+        _mount: _.values(
+          requireDir(path.join(process.cwd(), dir), {
+            mapValue(v, b) {
+              return v.name ? v : {};
+            }
+          })
+        )
+      };
     }
   }
 };
