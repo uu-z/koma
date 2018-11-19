@@ -4,7 +4,7 @@ services:
     image: "node:alpine"
     restart: always
     working_dir: /home/node/app
-    command: npm start
+    command: npm run dev
     environment:
       - PORT=8001
       - REDIS_CACHE_ENABLE=true
@@ -13,6 +13,7 @@ services:
       - MONGO_URL=mongo:27017
       - MONGO_DATABASE=test
       - MONGO_ENABLE=
+      - REDIS_ENABLE=
     labels:
       - traefik.backend=py
       - traefik.frontend.rule=Host:py.yuyuko.me
