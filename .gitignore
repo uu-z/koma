@@ -41,3 +41,7 @@ jspm_packages
 
 # temp
 .tmp/
+
+
+# dev
+hook.js
