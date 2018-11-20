@@ -6,7 +6,8 @@ module.exports = {
   name: "Validator",
   $validators: {
     $({ _key, _val }) {
-      _.set(Mhr, `validators.${_key}`, validate(_val()));
+      let val = _val();
+      _.set(Mhr, `validators.${_key}`, validate(val));
     }
   }
 };

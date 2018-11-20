@@ -1,13 +1,14 @@
 const pkg = require("./package.json");
 
 const {
+  NODE_ENV = "dev",
   HOST = "localhost",
   PORT = 8001,
   ES_ENABLE = false,
-  REDIS_CACHE_ENABLE = true,
+  REDIS_CACHE_ENABLE = false,
   REDIS_HOST = "localhost",
   REDIS_PORT = "6379",
-  MONGO_ENABLE = true,
+  MONGO_ENABLE = false,
   MONGO_URL = "localhost:27017",
   MONGO_DATABASE = "test",
   JWT_SECRET = "secred",
@@ -19,6 +20,8 @@ const {
 
 module.exports = {
   ...pkg,
+  IS_PROD: NODE_ENV == "prod",
+  NODE_ENV,
   HOST,
   PORT,
   ES_ENABLE,

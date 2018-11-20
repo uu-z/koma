@@ -1,11 +1,11 @@
-const Test = {
+module.exports = {
   name: "Test",
   routes: {
     "get /hello": "hello"
   },
   controllers: {
     async hello(ctx) {
-      ctx.body = await Test.services.hello();
+      ctx.body = await this.services.hello();
     }
   },
   services: {
@@ -14,5 +14,3 @@ const Test = {
     }
   }
 };
-
-module.exports = Test;

@@ -64,7 +64,7 @@ const utils = {
         _mount: _.values(
           requireDir(path.join(process.cwd(), dir), {
             mapValue(v, b) {
-              return v.name ? v : {};
+              return v.name || v.load == false ? v : {};
             }
           })
         )

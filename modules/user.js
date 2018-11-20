@@ -90,10 +90,6 @@ const User = {
           required: true,
           bcrypt: true,
           hidden: true
-        },
-        secret: {
-          type: "string",
-          bcrypt: true
         }
       }
     }

@@ -6,11 +6,15 @@ services:
     working_dir: /home/node/app
     command: npm run dev
     environment:
+      - HOST=localhost
       - PORT=8001
+      - REDIS_CACHE_ENABLE=true
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MONGO_ENABLE=true
       - MONGO_URL=mongo:27017
       - MONGO_DATABASE=test
+      - NODE_ENV=dev
     labels:
       - traefik.backend=py
       - traefik.frontend.rule=Host:py.yuyuko.me
