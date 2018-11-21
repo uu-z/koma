@@ -111,6 +111,14 @@ const User = {
 module.exports = User;
 ```
 
+## how to block a module
+
+Just add a `.` prefix to a filename
+
+```
+mongoose.js -> .mongoose.js
+```
+
 ## Dev
 
 1. `npm install`

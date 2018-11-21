@@ -6,11 +6,6 @@ const path = require("path");
 
 const utils = {
   name: "utils",
-  $utils: {
-    $({ _key, _val }) {
-      _.set(Mhr, `utils.${_key}`, _val);
-    }
-  },
   utils: {
     // Token
     signJWT({ data }) {
@@ -63,6 +58,10 @@ const utils = {
       return {
         _mount: _.values(
           requireDir(path.join(process.cwd(), dir), {
+            filter(file) {
+              const basename = path.basename(file);
+              return !basename.startsWith(".");
+            },
             mapValue(v, b) {
               return v.name || v.load == false ? v : {};
             }

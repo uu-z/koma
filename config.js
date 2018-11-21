@@ -4,18 +4,14 @@ const {
   NODE_ENV = "dev",
   HOST = "localhost",
   PORT = 8001,
-  ES_ENABLE = false,
-  REDIS_CACHE_ENABLE = false,
+  ES_HOST = "localhost",
+  ES_PORT = 9200,
   REDIS_HOST = "localhost",
   REDIS_PORT = "6379",
-  MONGO_ENABLE = false,
   MONGO_URL = "localhost:27017",
   MONGO_DATABASE = "test",
   JWT_SECRET = "secred",
-  JWT_EXP = Math.floor(Date.now() / 1000) + 60 * 60 * 12,
-  SOCKET_IO_ENABLE = false,
-  SOCKET_IO_CLIENT_ENABLE = false,
-  CLI_ENABLE = false
+  JWT_EXP = Math.floor(Date.now() / 1000) + 60 * 60 * 12
 } = process.env;
 
 module.exports = {
@@ -24,16 +20,12 @@ module.exports = {
   NODE_ENV,
   HOST,
   PORT,
-  ES_ENABLE,
-  REDIS_CACHE_ENABLE,
+  ES_HOST,
+  ES_PORT,
   REDIS_HOST,
   REDIS_PORT,
-  MONGO_ENABLE,
   MONGO_URL,
   MONGO_DATABASE,
   JWT_SECRET,
-  JWT_EXP,
-  SOCKET_IO_ENABLE,
-  SOCKET_IO_CLIENT_ENABLE,
-  CLI_ENABLE
+  JWT_EXP
 };

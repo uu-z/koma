@@ -24,8 +24,6 @@ module.exports = {
   },
   $start: {
     config({ _val }) {
-      const { CLI_ENABLE } = _val;
-      if (!CLI_ENABLE) return;
       cli.parse();
     }
   },

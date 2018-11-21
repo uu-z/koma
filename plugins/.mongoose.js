@@ -42,9 +42,7 @@ module.exports = {
   },
   $start: {
     async config({ _val }) {
-      const { MONGO_URL, MONGO_DATABASE, MONGO_ENABLE } = _val;
-      if (!MONGO_ENABLE) return;
-
+      const { MONGO_URL, MONGO_DATABASE } = _val;
       let db = await mongoose.connect(
         `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,
         {

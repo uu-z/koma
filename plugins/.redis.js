@@ -5,8 +5,7 @@ module.exports = {
 
   $start: {
     config({ _val }) {
-      const { REDIS_CACHE_ENABLE, REDIS_HOST, REDIS_PORT } = _val;
-      if (!REDIS_CACHE_ENABLE) return;
+      const { REDIS_HOST, REDIS_PORT } = _val;
       console.success("redis cache start~~~");
       Mhr.$use({
         use: [
