@@ -1,12 +1,9 @@
 # koma
 
 An advanced framework based on easy maintenance
-
-## Desc
-
 combind `model` `route` `controller` `services` `validators`... everything you want in just one module
 
-### Simple
+### Simple Example
 
 ```js
 module.exports = {
@@ -27,7 +24,7 @@ module.exports = {
 };
 ```
 
-### Advanced
+### Advanced Example
 
 ```js
 const _ = require("lodash");
