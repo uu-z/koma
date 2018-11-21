@@ -1,35 +1,28 @@
 const _ = require("lodash");
-const Joi = require("joi");
 const { utils } = require("../plugins/utils");
 
-const User = {
+module.exports = {
   name: "User",
   routes: {
     "get /users/:_id": "findUser",
     "get /users": "listUser",
-    "get /me": {
-      validators: "token",
-      controllers: "me"
-    },
+    "get /me": "checkToken|me",
     "post /signup": "signUp",
-    "post /login": {
-      validators: "login",
-      controllers: "login"
-    },
+    "post /login": "checkLogin|login",
     "put /users/:_id": "updateUser"
   },
   validators: {
-    token: () => ({
+    checkToken: {
       headers: {
-        authorization: Joi.string().required()
+        authorization: "string:,required"
       }
-    }),
-    login: () => ({
+    },
+    checkLogin: {
       body: {
-        identifier: Joi.string().required(),
-        password: Joi.string().required()
+        identifier: "string:,required",
+        password: "string:,required"
       }
-    })
+    }
   },
   controllers: {
     async signUp(ctx, next) {
@@ -95,4 +88,3 @@ const User = {
     }
   }
 };
-module.exports = User;

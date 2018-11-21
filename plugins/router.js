@@ -10,7 +10,6 @@ module.exports = {
   name: "Router",
   $routes: {
     $({ _key, _val }) {
-      _val = typeof _val == "object" ? _val : { controllers: _val };
       _.set(Mhr, `routes.${_key}`, _val);
     }
   },
@@ -24,20 +23,14 @@ module.exports = {
       const routes = _.get(Mhr, "routes", {});
       _.each(routes, (val, key) => {
         let fn;
-        if (typeof val == "string") {
-          fn = _.get(Mhr, `controllers.${val}`);
-        } else if (typeof val == "object") {
-          const fns = _.chain(val)
-            .mapKeys((v, k) => `${k}.${v}`)
-            .keys()
-            .map(v => _.get(Mhr, v))
-            .value();
-          fn = compose(fns);
-        }
-        if (!fn) {
-          console.warn(`${key}: ${val} not exists`);
-          fn = () => {};
-        }
+        const fns = val.split("|").map(key => {
+          const method = _.get(Mhr, `methods.${key}`);
+          if (!method) {
+            throw new Error(`routes: method ${key} not exists`);
+          }
+          return method;
+        });
+        fn = compose(fns);
         const [method, path] = key.split(" ");
         router[method](path, fn);
         app.use(router.routes());

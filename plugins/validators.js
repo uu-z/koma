@@ -1,13 +1,14 @@
 const { utils } = require("./utils");
 const validate = require("koa-joi-validate");
 const _ = require("lodash");
+const builder = require("joi-json").builder();
 
 module.exports = {
   name: "Validator",
   $validators: {
     $({ _key, _val }) {
-      let val = _val();
-      _.set(Mhr, `validators.${_key}`, validate(val));
+      const schema = builder.build(_val);
+      _.set(Mhr, `methods.${_key}`, validate(schema));
     }
   }
 };
