@@ -6,6 +6,29 @@ An advanced framework based on easy maintenance
 
 combind `model` `route` `controller` `services` `validators`... everything you want in just one module
 
+### Simple
+
+```js
+module.exports = {
+  name: "Test",
+  routes: {
+    "get /hello": "hello"
+  },
+  controllers: {
+    async hello(ctx) {
+      ctx.body = await this.services.hello();
+    }
+  },
+  services: {
+    async hello() {
+      return "Hello World";
+    }
+  }
+};
+```
+
+### Advanced
+
 ```js
 const _ = require("lodash");
 const { utils } = require("../plugins/utils");
