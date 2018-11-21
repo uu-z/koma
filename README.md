@@ -2,6 +2,11 @@
 
 Combind `model` `route` `controller` `services` `validators`... everything you want in just one module
 
+### Start
+
+1. `git clone https://github.com/uu-z/koma; cd koma`
+2. `yarn install; docker-compose up`
+
 ### Simple Example
 
 ```js
@@ -125,8 +130,3 @@ Just add a `.` prefix to a filename
 ```
 mongoose.js -> .mongoose.js
 ```
-
-## Dev
-
-1. `npm install`
-2. `docker-compose up`
