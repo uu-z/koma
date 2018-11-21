@@ -1,7 +1,6 @@
 # koma
 
-An advanced framework based on easy maintenance
-combind `model` `route` `controller` `services` `validators`... everything you want in just one module
+Combind `model` `route` `controller` `services` `validators`... everything you want in just one module
 
 ### Simple Example
 
