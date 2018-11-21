@@ -2,7 +2,7 @@
 
 Combind `model` `route` `controller` `services` `validators`... everything you want in just one module
 
-### Start
+## Start
 
 1. `git clone https://github.com/uu-z/koma; cd koma`
 2. `yarn install; docker-compose up`
