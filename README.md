@@ -119,7 +119,7 @@ module.exports = {
 };
 ```
 
-## how to block a module
+## how to disable a module
 
 Just add a `.` prefix to a filename
 
