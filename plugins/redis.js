@@ -1,3 +1,4 @@
+const Mhr = require("menhera").default;
 const cache = require("koa-redis-cache");
 
 module.exports = {

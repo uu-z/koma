@@ -1,6 +1,7 @@
+const Mhr = require("menhera").default;
 const _ = require("lodash");
 const IO = require("koa-socket.io");
-const { utils } = require("./utils");
+const { utils } = require("../core/utils");
 
 const io = new IO({
   namespace: "/"

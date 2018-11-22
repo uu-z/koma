@@ -1,5 +1,3 @@
-const pkg = require("./package.json");
-
 const {
   NODE_ENV = "dev",
   HOST = "localhost",
@@ -15,7 +13,6 @@ const {
 } = process.env;
 
 module.exports = {
-  ...pkg,
   IS_PROD: NODE_ENV == "prod",
   NODE_ENV,
   HOST,

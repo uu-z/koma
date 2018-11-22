@@ -1,4 +1,5 @@
-const { utils } = require("./utils");
+const Mhr = require("menhera").default;
+const { utils } = require("../core/utils");
 
 module.exports = {
   name: "Controller",

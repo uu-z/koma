@@ -1,3 +1,4 @@
+const Mhr = require("menhera").default;
 const mongoose = require("mongoose");
 const _ = require("lodash");
 const uniqueValidator = require("mongoose-unique-validator");

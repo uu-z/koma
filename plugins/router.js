@@ -1,18 +1,14 @@
-const { utils } = require("./utils");
+const Mhr = require("menhera").default;
+const { utils } = require("../core/utils");
 const _ = require("lodash");
 const compose = require("koa-compose");
 
 const Router = require("koa-router");
 const router = new Router();
 
-exports.router = router;
 module.exports = {
   name: "Router",
-  $routes: {
-    $({ _key, _val }) {
-      _.set(Mhr, `routes.${_key}`, _val);
-    }
-  },
+  $routes: utils.injectObject("routes"),
   $start: {
     app({ _val: app }) {
       this.RouterUtils.InjectRoutes({ app });
@@ -21,6 +17,7 @@ module.exports = {
   RouterUtils: {
     InjectRoutes({ app }) {
       const routes = _.get(Mhr, "routes", {});
+      Mhr.$use({ start: { routes } });
       _.each(routes, (val, key) => {
         let fn;
         const fns = val.split("|").map(key => {

@@ -4,8 +4,9 @@ Combind `model` `route` `controller` `services` `validators`... everything you w
 
 ## Start
 
-1. `git clone https://github.com/uu-z/koma; cd koma`
-2. `yarn install; docker-compose up`
+```
+> yarn add koma
+```
 
 ### Simple Example
 
@@ -32,7 +33,7 @@ module.exports = {
 
 ```js
 const _ = require("lodash");
-const { utils } = require("../plugins/utils");
+const { utils } = require("../core/utils");
 
 module.exports = {
   name: "User",
@@ -121,12 +122,4 @@ module.exports = {
     }
   }
 };
-```
-
-## how to disable a module
-
-Just add a `.` prefix to a filename
-
-```
-mongoose.js -> .mongoose.js
 ```

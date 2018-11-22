@@ -1,3 +1,4 @@
+const Mhr = require("menhera").default;
 const signale = require("signale");
 
 const {

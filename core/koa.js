@@ -1,3 +1,4 @@
+const Mhr = require("menhera").default;
 const Koa = require("koa");
 const http = require("http");
 const app = new Koa();
@@ -10,10 +11,9 @@ module.exports = {
       app.use(_val);
     }
   },
-  $start: {
-    config({ _val }) {
-      const { PORT } = _val;
-      Mhr.config = _val;
+  $loaded: {
+    modules() {
+      const { PORT } = Mhr.config;
       Mhr.$use({ start: { app } });
       const server = http.createServer(app.callback());
       Mhr.$use({ start: { server } });

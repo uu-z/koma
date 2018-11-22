@@ -1,3 +1,4 @@
+const Mhr = require("menhera").default;
 const es = require("koa-elasticsearch");
 
 module.exports = {

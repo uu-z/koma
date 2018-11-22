@@ -1,3 +1,4 @@
+const Mhr = require("menhera").default;
 const cac = require("cac");
 const _ = require("lodash");
 const cli = cac();
