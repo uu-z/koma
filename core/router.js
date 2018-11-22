@@ -1,5 +1,5 @@
 const Mhr = require("menhera").default;
-const { utils } = require("../core/utils");
+const { utils } = require("./utils");
 const _ = require("lodash");
 const compose = require("koa-compose");
 

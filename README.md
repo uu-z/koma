@@ -8,6 +8,26 @@ Combind `model` `route` `controller` `services` `validators`... everything you w
 > yarn add koma
 ```
 
+```js
+const { koma } = require("koma");
+
+koma.$use({
+  routes: {
+    "get /": "hello"
+  },
+  controllers: {
+    async hello(ctx) {
+      ctx.body = "Hello World!";
+    }
+  },
+  start: {
+    config: {
+      PORT: 8001
+    }
+  }
+});
+```
+
 ### Simple Example
 
 ```js
