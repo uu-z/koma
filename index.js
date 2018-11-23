@@ -1,8 +1,9 @@
 const Mhr = require("menhera").default;
 const { utils } = require("./core/utils");
+const path = require("path");
 
 exports.utils = utils;
-exports.koma = Mhr.$use(utils.load("./core")).$use({
+exports.koma = Mhr.$use(utils.load(path.resolve(__dirname, "./core"))).$use({
   metas: {
     mongoose: {
       load: false
@@ -27,6 +28,6 @@ exports.koma = Mhr.$use(utils.load("./core")).$use({
     }
   },
   load: {
-    plugins: ["./plugins"]
+    plugins: [path.resolve(__dirname, "./plugins")]
   }
 });

@@ -84,7 +84,7 @@ module.exports = {
     load(dir) {
       return {
         _mount: _.values(
-          requireDir(path.join(process.cwd(), dir), {
+          requireDir(path.resolve(dir), {
             filter(file) {
               const basename = path.basename(file, ".js");
               const load = _.get(Mhr, `metas.${basename}.load`, true);
