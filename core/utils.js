@@ -5,6 +5,9 @@ const monngose = require("mongoose");
 const requireDir = require("require-dir");
 const path = require("path");
 
+const bluebird = require("bluebird");
+global.Promies = bluebird;
+
 module.exports = {
   name: "utils",
   utils: {
@@ -85,6 +88,7 @@ module.exports = {
       return {
         _mount: _.values(
           requireDir(path.resolve(dir), {
+            noCache: true,
             filter(file) {
               const basename = path.basename(file, ".js");
               const load = _.get(Mhr, `metas.${basename}.load`, true);
