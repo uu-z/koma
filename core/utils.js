@@ -4,9 +4,22 @@ const jwt = require("jsonwebtoken");
 const monngose = require("mongoose");
 const requireDir = require("require-dir");
 const path = require("path");
+const signale = require("signale");
 
 const bluebird = require("bluebird");
 global.Promies = bluebird;
+
+const { error, debug, info, start, success, warn, log } = signale;
+
+Object.assign(console, {
+  error,
+  debug,
+  info,
+  start,
+  success,
+  warn,
+  log
+});
 
 module.exports = {
   name: "utils",

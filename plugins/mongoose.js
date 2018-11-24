@@ -42,7 +42,7 @@ module.exports = {
     }
   },
   $start: {
-    async plugins() {
+    async app() {
       const { MONGO_URL, MONGO_DATABASE } = _.get(Mhr, "config", {});
       await mongoose.connect(
         `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,

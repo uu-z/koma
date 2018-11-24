@@ -7,7 +7,7 @@ const { ES_PORT, ES_HOST } = _.get(Mhr, "config");
 module.exports = {
   name: "ElasticeSearch",
   $start: {
-    plugins({ _val }) {
+    app() {
       console.success("Elasticsearch start~~~");
     }
   },

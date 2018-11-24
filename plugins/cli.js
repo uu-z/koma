@@ -24,7 +24,7 @@ module.exports = {
     }
   },
   $start: {
-    plugins({ _val }) {
+    app({ _val }) {
       cli.parse();
       console.success("cli start~~~");
     }

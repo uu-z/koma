@@ -24,7 +24,7 @@ module.exports = {
         start: { modules: true }
       });
     },
-    plugins() {},
+    app() {},
     modules() {
       const { PORT } = Mhr.config;
       Mhr.$use({ start: { app } });

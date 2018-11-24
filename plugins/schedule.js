@@ -7,7 +7,7 @@ module.exports = {
   name: "Schedule",
   $schedules: utils.injectObject("schedules"),
   $start: {
-    plugins() {
+    app() {
       const schedules = _.get(Mhr, "schedules", {});
       _.each(schedules, (val, key) => {
         const j = schedule.scheduleJob(key, val);

@@ -7,7 +7,7 @@ const { REDIS_HOST, REDIS_PORT } = _.get(Mhr, "config", {});
 module.exports = {
   name: "RedisCache",
   $start: {
-    plugins() {
+    app() {
       console.success("redis-cache start~~~");
     }
   },

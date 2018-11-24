@@ -11,7 +11,7 @@ const redis = new Redis({
 module.exports = {
   name: "Redis",
   $start: {
-    plugins() {
+    app() {
       console.success("redis start~~~");
     }
   },
