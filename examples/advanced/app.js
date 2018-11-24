@@ -6,12 +6,15 @@ koma
     metas: {
       mongoose: {
         load: true
+      },
+      redis: {
+        load: true
       }
     }
   })
   .$use({
     load: {
-      modules: ["./examples/simple/modules"]
+      modules: ["./examples/advanced/modules"]
     },
     start: { config }
   });

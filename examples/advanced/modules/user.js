@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const { utils } = require("../core/utils");
+const { utils } = require("../../../index");
 
 module.exports = {
   name: "User",

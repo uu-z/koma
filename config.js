@@ -9,6 +9,9 @@ module.exports = {
     redis: {
       load: false
     },
+    "redis-cache": {
+      load: false
+    },
     elasticsearch: {
       load: false
     },
@@ -18,10 +21,10 @@ module.exports = {
     socket: {
       load: false
     },
-    cli: {
+    "socket-client": {
       load: false
     },
-    "socket.client": {
+    cli: {
       load: false
     }
   }

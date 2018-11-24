@@ -8,6 +8,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.2",
     "@types/elasticsearch": "^5.0.28",
+    "@types/ioredis": "^4.0.4",
     "@types/joi": "^14.0.0",
     "@types/koa-compose": "^3.2.2",
     "@types/koa-jwt": "^3.3.0",
@@ -22,6 +23,7 @@
     "bluebird": "^3.5.3",
     "cac": "^5.0.15",
     "elasticsearch": "^15.2.0",
+    "ioredis": "^4.2.0",
     "joi": "^14.0.6",
     "joi-json": "^2.1.0",
     "jsonwebtoken": "^8.4.0",
