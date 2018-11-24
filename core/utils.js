@@ -85,9 +85,10 @@ module.exports = {
         });
     },
     load(dir) {
-      return {
+      dir = Array.isArray(dir) ? dir : [dir];
+      return dir.map(val => ({
         _mount: _.values(
-          requireDir(path.resolve(dir), {
+          requireDir(path.resolve(val), {
             noCache: true,
             filter(file) {
               const basename = path.basename(file, ".js");
@@ -99,7 +100,7 @@ module.exports = {
             }
           })
         )
-      };
+      }));
     }
   }
 };

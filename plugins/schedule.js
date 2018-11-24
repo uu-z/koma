@@ -7,12 +7,12 @@ module.exports = {
   name: "Schedule",
   $schedules: utils.injectObject("schedules"),
   $start: {
-    config() {
+    plugins() {
       const schedules = _.get(Mhr, "schedules", {});
       _.each(schedules, (val, key) => {
         const j = schedule.scheduleJob(key, val);
       });
-      console.success("schedule job start~~~");
+      console.success("schedule start~~~");
     }
   }
   // schedules: {

@@ -40,7 +40,7 @@
     "koa-session": "^5.10.0",
     "koa-socket.io": "^1.1.2",
     "lodash": "^4.17.11",
-    "menhera": "0.8.4",
+    "menhera": "^0.8.5-rc1",
     "menhera-utils": "^0.0.1",
     "mongoose": "^5.3.12",
     "mongoose-autopopulate": "^0.9.0",

@@ -24,17 +24,16 @@ module.exports = {
     }
   },
   $start: {
-    config({ _val }) {
+    plugins({ _val }) {
       cli.parse();
+      console.success("cli start~~~");
     }
   },
   commands: {
     "*": {
       desc: "The default command",
       options: {},
-      handler: (input, flags) => {
-        console.success("cli start~~~");
-      }
+      handler: (input, flags) => {}
     }
   }
 };

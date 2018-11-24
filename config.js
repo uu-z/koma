@@ -1,5 +1,11 @@
 module.exports = {
   metas: {
+    middlewares: {
+      load: true
+    },
+    validators: {
+      load: true
+    },
     schedule: {
       load: false
     },

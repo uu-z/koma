@@ -2513,20 +2513,20 @@ menhera-utils@^0.0.1:
     menhera "^0.7.2"
     menhera-cli "^0.3.1-rc4"
 
-menhera@0.8.4:
-  version "0.8.4"
-  resolved "https://registry.npmjs.org/menhera/-/menhera-0.8.4.tgz#604959658ba69bdecc738f8f46a594fe7cb3dd66"
-  integrity sha512-3EAYOwDGy6LSxnpKRjv+/ISjPLsNZXtzy5j2EtJ/I0XBROL/mt1nHggJeLZ/vezflG+Pfx+h4jJ43WHfNaWlNg==
+menhera@^0.7.1-rc, menhera@^0.7.2:
+  version "0.7.7"
+  resolved "http://registry.npm.taobao.org/menhera/download/menhera-0.7.7.tgz#cd8f4f9fab8a6a33959d11175968dc18045152ea"
+  integrity sha1-zY9Pn6uKajOVnREXWWjcGARRUuo=
   dependencies:
     lodash.get "^4.4.2"
     lodash.has "^4.5.2"
     lodash.set "^4.3.2"
     uuid "^3.2.1"
 
-menhera@^0.7.1-rc, menhera@^0.7.2:
-  version "0.7.7"
-  resolved "http://registry.npm.taobao.org/menhera/download/menhera-0.7.7.tgz#cd8f4f9fab8a6a33959d11175968dc18045152ea"
-  integrity sha1-zY9Pn6uKajOVnREXWWjcGARRUuo=
+menhera@^0.8.5-rc1:
+  version "0.8.5-rc1"
+  resolved "https://registry.npmjs.org/menhera/-/menhera-0.8.5-rc1.tgz#53f9abc36d87d7c6d70f8a81fbfa53427ca02d68"
+  integrity sha512-4fE1N4yzAFgi8ZLj8Hf23ABQiqDp1RtIFB5YVjHgEUMfrPxZwbO3TI65ZYgbD1EkWxS9ML12POkvTlTbLFohfg==
   dependencies:
     lodash.get "^4.4.2"
     lodash.has "^4.5.2"

@@ -42,9 +42,9 @@ module.exports = {
     }
   },
   $start: {
-    async config({ _val }) {
-      const { MONGO_URL, MONGO_DATABASE } = _val;
-      let db = await mongoose.connect(
+    async plugins() {
+      const { MONGO_URL, MONGO_DATABASE } = _.get(Mhr, "config", {});
+      await mongoose.connect(
         `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,
         {
           useCreateIndex: true,
@@ -52,7 +52,6 @@ module.exports = {
         }
       );
       console.success("mongodb start~~~");
-      this.db = db;
     }
   }
 };
