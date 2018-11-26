@@ -32,7 +32,7 @@ koma.$use({
 
 ```js
 const _ = require("lodash");
-const { utils } = require("../core/utils");
+const utils = require("../utils");
 
 module.exports = {
   name: "User",
@@ -44,7 +44,7 @@ module.exports = {
     "post /login": "checkLogin|login",
     "put /users/:_id": "updateUser"
   },
-  validators: {
+  joi: {
     checkToken: {
       headers: {
         authorization: "string:,required"
@@ -87,7 +87,7 @@ module.exports = {
       const validPassword = await user.verifyPassword(password);
       if (validPassword) {
         delete user.password;
-        ctx.body = { user, token: utils.signJWT({ data: user._id }) };
+        ctx.body = { user, token: ctx.signJWT({ data: user._id }) };
       } else {
         ctx.throw(401, "invalid username or password");
       }

@@ -21,6 +21,19 @@ module.exports = {
   name: "utils",
   utils: {
     // Utils
+    injectMethods(name, inject) {
+      return {
+        $({ _key, _val }) {
+          const key = `${name}.${_key}`;
+          const target = _.get(Mhr, key, {});
+          _.set(Mhr, key, {
+            ...target,
+            fn: _val,
+            ...inject
+          });
+        }
+      };
+    },
     injectObject(name) {
       return {
         _({ _val }) {

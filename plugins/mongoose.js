@@ -17,6 +17,7 @@ globalPlugins.forEach(plugin => {
   mongoose.plugin(plugin);
 });
 
+exports.mongoose = mongoose;
 module.exports = {
   name: "Mongoose",
   $models: {

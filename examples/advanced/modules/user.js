@@ -11,7 +11,7 @@ module.exports = {
     "post /login": "checkLogin|login",
     "put /users/:_id": "updateUser"
   },
-  validators: {
+  joi: {
     checkToken: {
       headers: {
         authorization: "string:,required"

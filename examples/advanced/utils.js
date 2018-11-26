@@ -1,5 +1,5 @@
 const { utils } = require("../../index");
-const { MongooseUtils } = require("../../plugins/mongoose");
+const { MongooseUtils, mongoose } = require("../../plugins/mongoose");
 
 module.exports = {
   ...utils,

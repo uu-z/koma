@@ -7,7 +7,7 @@ const redis = new Redis({
   host: REDIS_HOST,
   port: REDIS_PORT
 });
-
+exports.redis = redis;
 module.exports = {
   name: "Redis",
   $start: {

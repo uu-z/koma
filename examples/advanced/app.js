@@ -9,6 +9,9 @@ koma
       },
       redis: {
         load: true
+      },
+      hook: {
+        load: config.IS_PROD ? false : true
       }
     }
   })

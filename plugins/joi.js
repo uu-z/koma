@@ -5,11 +5,14 @@ const _ = require("lodash");
 const builder = require("joi-json").builder();
 
 module.exports = {
-  name: "Validator",
-  $validators: {
+  name: "Joi",
+  $joi: {
     $({ _key, _val }) {
       const schema = builder.build(_val);
-      _.set(Mhr, `methods.${_key}`, validate(schema));
+      utils.injectMethods("methods", { type: "joi", validator: _val }).$({
+        _key,
+        _val: validate(schema)
+      });
     }
   }
 };

@@ -21,7 +21,7 @@ module.exports = {
       _.each(routes, (val, key) => {
         let fn;
         const fns = val.split("|").map(key => {
-          const method = _.get(Mhr, `methods.${key}`);
+          const method = _.get(Mhr, `methods.${key}.fn`);
           if (!method) {
             throw new Error(`routes: method ${key} not exists`);
           }
