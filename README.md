@@ -2,11 +2,13 @@
 
 Combind `model` `route` `controller` `services` `validators`... everything you want in just one module
 
-## Start
+## install
 
 ```
 > yarn add koma
 ```
+
+### start
 
 ```js
 const { koma } = require("koma");
@@ -29,6 +31,34 @@ koma.$use({
 ```
 
 ### Advanced Example
+
+after start advanced example. you can open `http://localhost:8001/playground` to play with graphql playground
+
+```js
+const { koma } = require("koma");
+const config = require("./config");
+
+koma.$use({
+  metas: {
+    mongoose: {
+      load: true
+    },
+    graphql: {
+      load: true
+    },
+    redis: {
+      load: true
+    },
+    "redis-cache": {
+      load: true
+    }
+  },
+  load: {
+    modules: ["./examples/advanced/modules"]
+  },
+  start: { config }
+});
+```
 
 ```js
 const _ = require("lodash");

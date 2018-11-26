@@ -9,6 +9,9 @@ module.exports = {
     schedule: {
       load: false
     },
+    graphql: {
+      load: false
+    },
     mongoose: {
       load: false
     },

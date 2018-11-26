@@ -1,23 +1,23 @@
 const { koma } = require("../../index");
 const config = require("./config");
 
-koma
-  .$use({
-    metas: {
-      mongoose: {
-        load: true
-      },
-      redis: {
-        load: true
-      },
-      hook: {
-        load: config.IS_PROD ? false : true
-      }
-    }
-  })
-  .$use({
-    load: {
-      modules: ["./examples/advanced/modules"]
+koma.$use({
+  metas: {
+    mongoose: {
+      load: true
     },
-    start: { config }
-  });
+    graphql: {
+      load: true
+    },
+    redis: {
+      load: true
+    },
+    "redis-cache": {
+      load: true
+    }
+  },
+  load: {
+    modules: ["./examples/advanced/modules"]
+  },
+  start: { config }
+});

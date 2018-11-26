@@ -4,6 +4,7 @@ const cors = require("@koa/cors");
 const koaJwt = require("koa-jwt");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
+const helmet = require("koa-helmet");
 
 const { JWT_SECRET } = _.get(Mhr, "config", {});
 
@@ -14,6 +15,7 @@ module.exports = {
     cors({
       origin: "*"
     }),
+    helmet(),
     koaJwt({ secret: JWT_SECRET, passthrough: true }),
     async (ctx, next) => {
       ctx.signJWT = ({ data }) => {
