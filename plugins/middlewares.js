@@ -1,7 +1,8 @@
 const Mhr = require("menhera").default;
 const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
-const jwt = require("koa-jwt");
+const koaJwt = require("koa-jwt");
+const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 
 const { JWT_SECRET } = _.get(Mhr, "config", {});
@@ -13,7 +14,7 @@ module.exports = {
     cors({
       origin: "*"
     }),
-    jwt({ secret: JWT_SECRET, passthrough: true }),
+    koaJwt({ secret: JWT_SECRET, passthrough: true }),
     async (ctx, next) => {
       ctx.signJWT = ({ data }) => {
         const { JWT_EXP, JWT_SECRET } = Mhr.config;
