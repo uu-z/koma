@@ -1,4 +1,4 @@
-const { koma, utils } = require("../../index");
+const { koma } = require("../../index");
 const config = require("./config");
 
 koma

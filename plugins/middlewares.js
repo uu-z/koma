@@ -15,6 +15,13 @@ module.exports = {
     }),
     jwt({ secret: JWT_SECRET, passthrough: true }),
     async (ctx, next) => {
+      ctx.signJWT = ({ data }) => {
+        const { JWT_EXP, JWT_SECRET } = Mhr.config;
+        return jwt.sign({ data, exp: JWT_EXP }, JWT_SECRET);
+      };
+      await next();
+    },
+    async (ctx, next) => {
       const start = new Date();
       await next();
       const ms = new Date() - start;

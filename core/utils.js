@@ -1,13 +1,9 @@
 const Mhr = require("menhera").default;
 const _ = require("lodash");
-const jwt = require("jsonwebtoken");
-const monngose = require("mongoose");
 const requireDir = require("require-dir");
 const path = require("path");
 const signale = require("signale");
-
-const bluebird = require("bluebird");
-global.Promies = bluebird;
+global.Promies = require("bluebird");
 
 const { error, debug, info, start, success, warn, log } = signale;
 
@@ -24,36 +20,6 @@ Object.assign(console, {
 module.exports = {
   name: "utils",
   utils: {
-    // Token
-    signJWT({ data }) {
-      const { JWT_EXP, JWT_SECRET } = Mhr.config;
-      return jwt.sign({ data, exp: JWT_EXP }, JWT_SECRET);
-    },
-    // Model
-    convertParams(name, values) {
-      const model = monngose.models[name];
-      return _.pick(values, _.keys(model.schema));
-    },
-    model(name) {
-      return monngose.models[name];
-    },
-    create(name, params) {
-      const model = monngose.models[name];
-      return model.create(params);
-    },
-    findOne(name, params) {
-      const model = monngose.models[name];
-      return model.findOne(params);
-    },
-    updateOne(name, query, values) {
-      const data = utils.convertParams(name, values);
-      const model = monngose.models[name];
-      return model.updateOne(query, data);
-    },
-    paginate(name, query, paginate) {
-      const model = monngose.models[name];
-      return model.paginate(query, paginate);
-    },
     // Utils
     injectObject(name) {
       return {

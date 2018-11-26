@@ -53,5 +53,31 @@ module.exports = {
       );
       console.success("mongodb start~~~");
     }
+  },
+  MongooseUtils: {
+    convertParams(name, values) {
+      const model = mongoose.models[name];
+      return _.pick(values, _.keys(model.schema));
+    },
+    model(name) {
+      return mongoose.models[name];
+    },
+    create(name, params) {
+      const model = mongoose.models[name];
+      return model.create(params);
+    },
+    findOne(name, params) {
+      const model = mongoose.models[name];
+      return model.findOne(params);
+    },
+    updateOne(name, query, values) {
+      const data = utils.convertParams(name, values);
+      const model = mongoose.models[name];
+      return model.updateOne(query, data);
+    },
+    paginate(name, query, paginate) {
+      const model = mongoose.models[name];
+      return model.paginate(query, paginate);
+    }
   }
 };
