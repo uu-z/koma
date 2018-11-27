@@ -31,23 +31,14 @@ koma.$use({
 after start advanced example. you can open `http://localhost:8001/playground` to play with graphql playground
 
 ```js
-const { koma } = require("koma");
+const { koma } = require("../../index");
 
 koma.$use({
   start: {
     metas: {
-      mongoose: {
-        load: true
-      },
-      graphql: {
-        load: true
-      },
-      redis: {
-        load: true
-      },
-      "redis-cache": {
-        load: true
-      }
+      mongoose: { load: true },
+      graphql: { load: true },
+      redis: { load: true }
     },
     load: {
       plugins: [],
@@ -55,7 +46,7 @@ koma.$use({
     },
     config: {
       PORT: 8001,
-      run: true
+      RUN: true
     }
   }
 });
