@@ -4,7 +4,7 @@ services:
     image: "node:alpine"
     restart: always
     working_dir: /home/node/app
-    command: npm run dev
+    command: npm run start
     environment:
       - HOST=localhost
       - PORT=8001
@@ -14,7 +14,7 @@ services:
       - REDIS_PORT=6379
       - MONGO_URL=mongo:27017
       - MONGO_DATABASE=test
-      - NODE_ENV=dev
+      - NODE_ENV=prod
     volumes:
       - ./:/home/node/app
     networks:

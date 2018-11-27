@@ -35,6 +35,8 @@ module.exports = {
           fn = compose(fns);
         } else if (typeof val == "function") {
           fn = val;
+        } else if (Array.isArray(val)) {
+          fn = compose(val);
         }
 
         const [method, path] = key.split(" ");

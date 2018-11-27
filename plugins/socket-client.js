@@ -9,7 +9,7 @@ module.exports = {
     socketServer() {
       client = IO_Client(`http://${Mhr.config.HOST}:${Mhr.config.PORT}`);
       client.on("connect", () => {
-        console.info("client:", "connected");
+        console.info("socket-client:", "connected");
       });
     }
   }

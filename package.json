@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -L examples/simple/app.js"
+    "start": "nodemon -L examples/simple/app.js",
+    "dev": "cross-env NODE_ENV=dev nodemon -L examples/simple/app.js"
   },
   "dependencies": {
     "@koa/cors": "^2.2.2",
@@ -70,6 +71,7 @@
     "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.6"
+    "nodemon": "^1.18.6",
+    "cross-env": "^5.2.0"
   }
 }

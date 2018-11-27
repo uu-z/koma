@@ -85,7 +85,9 @@ module.exports = {
             filter(file) {
               const basename = path.basename(file, ".js");
               const load = _.get(Mhr, `metas.${basename}.load`, true);
-              return load;
+              const depends = _.get(Mhr, `metas.${basename}.depends_on`, []);
+              const depends_valid = depends.every(i => _.get(Mhr, `metas.${basename}.load`, false));
+              return load && depends_valid;
             },
             mapValue(v, b) {
               return v.name ? v : {};

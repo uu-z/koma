@@ -15,7 +15,7 @@ module.exports = {
   io: {
     on: {
       async connect(ctx) {
-        console.info("server: ", ctx);
+        console.info("socket-server: ", ctx);
       }
     }
   },
