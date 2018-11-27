@@ -6,20 +6,17 @@ const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const helmet = require("koa-helmet");
 
-const { JWT_SECRET } = _.get(Mhr, "config", {});
+const { CORS, BODY_PARSER, JWT, JWT_EXP, JWT_SECRET, HELMET } = _.get(Mhr, "config", {});
 
 module.exports = {
   name: "Middlewares",
   use: [
-    bodyParser(),
-    cors({
-      origin: "*"
-    }),
-    helmet(),
-    koaJwt({ secret: JWT_SECRET, passthrough: true }),
+    bodyParser(BODY_PARSER),
+    cors(CORS),
+    helmet(HELMET),
+    koaJwt(JWT),
     async (ctx, next) => {
       ctx.signJWT = ({ data }) => {
-        const { JWT_EXP, JWT_SECRET } = Mhr.config;
         return jwt.sign({ data, exp: JWT_EXP }, JWT_SECRET);
       };
       await next();
