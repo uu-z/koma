@@ -12,19 +12,6 @@ module.exports = {
     "put /users/:_id": updateById("User"),
     "delete /users/:_id": removeById("User")
   }),
-  joi: {
-    checkToken: {
-      headers: {
-        authorization: "string:,required"
-      }
-    },
-    checkLogin: {
-      body: {
-        identifier: "string:,required",
-        password: "string:,required"
-      }
-    }
-  },
   controllers: {
     async login(ctx) {
       const { identifier, password } = ctx.request.body;
@@ -66,6 +53,19 @@ module.exports = {
           bcrypt: true,
           hidden: true
         }
+      }
+    }
+  },
+  joi: {
+    checkToken: {
+      headers: {
+        authorization: "string:,required"
+      }
+    },
+    checkLogin: {
+      body: {
+        identifier: "string:,required",
+        password: "string:,required"
       }
     }
   }

@@ -31,7 +31,7 @@ koma.$use({
 after start advanced example. you can open `http://localhost:8001/playground` to play with graphql playground
 
 ```js
-const { koma } = require("../../index");
+const { koma } = require("koma");
 
 koma.$use({
   start: {
@@ -67,19 +67,6 @@ module.exports = {
     "put /users/:_id": updateById("User"),
     "delete /users/:_id": removeById("User")
   }),
-  joi: {
-    checkToken: {
-      headers: {
-        authorization: "string:,required"
-      }
-    },
-    checkLogin: {
-      body: {
-        identifier: "string:,required",
-        password: "string:,required"
-      }
-    }
-  },
   controllers: {
     async login(ctx) {
       const { identifier, password } = ctx.request.body;
@@ -121,6 +108,19 @@ module.exports = {
           bcrypt: true,
           hidden: true
         }
+      }
+    }
+  },
+  joi: {
+    checkToken: {
+      headers: {
+        authorization: "string:,required"
+      }
+    },
+    checkLogin: {
+      body: {
+        identifier: "string:,required",
+        password: "string:,required"
       }
     }
   }
