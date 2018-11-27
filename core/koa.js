@@ -8,23 +8,19 @@ const app = new Koa();
 exports.app = app;
 module.exports = {
   name: "App",
-  $metas: utils.injectObjectDeep("metas"),
-  $load: utils.injectObjectArray("load"),
   $use: utils.injectArray("use"),
   $start: {
     // lifecycle
-    config({ _val }) {
-      Mhr.config = _val;
-      const { plugins = [], modules = [] } = Mhr.load;
-
-      Mhr.$use(utils.load(plugins)).$use({
-        start: { plugins: true }
-      });
-      Mhr.$use(utils.load(modules)).$use({
-        start: { modules: true }
-      });
+    config: utils.injectObject("config"),
+    metas: utils.injectObjectDeep("metas"),
+    load({ _val }) {
+      const { plugins, modules } = _val;
+      plugins &&
+        Mhr.$use(utils.load(plugins)).$use({
+          start: { plugins: true }
+        });
+      modules && Mhr.$use(utils.load(modules)).$use({ start: { modules: true } });
     },
-    app() {},
     modules() {
       const { PORT } = Mhr.config;
       Mhr.$use({ start: { app } });
