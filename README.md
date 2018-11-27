@@ -11,7 +11,7 @@ Combind `model` `route` `controller` `services` `validators`... everything you w
 ### start
 
 ```js
-const { koma } = require("../index");
+const { koma } = require("koma");
 
 koma.$use({
   routes: {

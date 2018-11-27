@@ -15,11 +15,6 @@ services:
       - MONGO_URL=mongo:27017
       - MONGO_DATABASE=test
       - NODE_ENV=dev
-    labels:
-      - traefik.backend=py
-      - traefik.frontend.rule=Host:py.yuyuko.me
-      - traefik.docker.network=proxy
-      - traefik.port=8001
     volumes:
       - ./:/home/node/app
     networks:
