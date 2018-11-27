@@ -2,11 +2,13 @@ const { koma } = require("../../index");
 
 koma.$use({
   start: {
-    config: {
-      PORT: 8001
-    },
     load: {
+      plugins: [],
       modules: ["./examples/simple/modules"]
+    },
+    config: {
+      PORT: 8001,
+      RUN: true
     }
   }
 });

@@ -19,10 +19,8 @@ koma.$use({
   },
   start: {
     config: {
-      PORT: 8001
-    },
-    load: {
-      modules: []
+      PORT: 8001,
+      RUN: true
     }
   }
 });
@@ -34,7 +32,6 @@ after start advanced example. you can open `http://localhost:8001/playground` to
 
 ```js
 const { koma } = require("koma");
-const config = require("./config");
 
 koma.$use({
   start: {
@@ -52,9 +49,13 @@ koma.$use({
         load: true
       }
     },
-    config,
     load: {
+      plugins: [],
       modules: ["./examples/advanced/modules"]
+    },
+    config: {
+      PORT: 8001,
+      run: true
     }
   }
 });

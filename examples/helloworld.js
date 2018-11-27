@@ -6,10 +6,8 @@ koma.$use({
   },
   start: {
     config: {
-      PORT: 8001
-    },
-    load: {
-      modules: []
+      PORT: 8001,
+      RUN: true
     }
   }
 });

@@ -1,5 +1,4 @@
 const { koma } = require("../../index");
-const config = require("./config");
 
 koma.$use({
   start: {
@@ -17,9 +16,13 @@ koma.$use({
         load: true
       }
     },
-    config,
     load: {
+      plugins: [],
       modules: ["./examples/advanced/modules"]
+    },
+    config: {
+      PORT: 8001,
+      RUN: true
     }
   }
 });

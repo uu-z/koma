@@ -13,9 +13,7 @@ module.exports = {
   $start: {
     app({ _val: app }) {
       Mhr.$use({
-        start: {
-          router: true
-        }
+        start: { router: true }
       });
       this.RouterUtils.InjectRoutes({ app });
     }

@@ -7,7 +7,7 @@ const {
   ES_HOST = "localhost",
   ES_PORT = 9200,
   REDIS_HOST = "localhost",
-  REDIS_PORT = "6379",
+  REDIS_PORT = 6379,
   MONGO_URL = "localhost:27017",
   MONGO_DATABASE = "test",
   JWT_SECRET = "secred",
@@ -49,7 +49,8 @@ module.exports = {
       JWT_EXP
     },
     load: {
-      plugins: [path.resolve(__dirname, "./plugins")]
+      plugins: [path.resolve(__dirname, "./plugins")],
+      modules: []
     }
   }
 };

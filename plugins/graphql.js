@@ -23,7 +23,10 @@ const defaultResolvers = {
 module.exports = {
   name: "Graphql",
   $start: {
-    router({ _val: app }) {
+    app() {
+      console.success("graphql start~~~");
+    },
+    router() {
       _.each(mongoose.models, (val, key) => {
         let options = {
           fields: {
