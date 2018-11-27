@@ -15,12 +15,11 @@ module.exports = {
   controllers: {
     async login(ctx) {
       const { identifier, password } = ctx.request.body;
-      const user = await utils
-        .findByIdOne("User", { $or: [{ email: identifier }, { username: identifier }] })
-        .select("+password");
-      if (!user) {
-        return ctx.notFound;
-      }
+
+      const model = utils.model("User");
+      const user = await model.findOne({ $or: [{ email: identifier }, { username: identifier }] }).select("+password");
+      if (!user) return ctx.notFound;
+
       const validPassword = await user.verifyPassword(password);
       if (validPassword) {
         delete user.password;
