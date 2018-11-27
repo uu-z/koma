@@ -1,9 +1,11 @@
 const _ = require("lodash");
-const utils = require("../utils");
+const { MongooseUtils } = require("../../../plugins/mongoose");
+
+const { findById, pagination, createOne, updateById, removeById, models } = MongooseUtils;
 
 module.exports = {
   name: "User",
-  routes: ({ checkToken, checkLogin, login, createOne, me, findById, pagination, updateById, removeById }) => ({
+  routes: ({ checkToken, checkLogin, login, me }) => ({
     "get /users/:_id": findById("User"),
     "get /users": pagination("User"),
     "get /me": [checkToken, me],
@@ -16,8 +18,8 @@ module.exports = {
     async login(ctx) {
       const { identifier, password } = ctx.request.body;
 
-      const model = utils.model("User");
-      const user = await model.findOne({ $or: [{ email: identifier }, { username: identifier }] }).select("+password");
+      const User = models("User");
+      const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] }).select("+password");
       if (!user) return ctx.notFound;
 
       const validPassword = await user.verifyPassword(password);
@@ -30,7 +32,8 @@ module.exports = {
     },
     async me(ctx) {
       const userId = _.get(ctx.state, "user.data");
-      ctx.body = await utils.findOne("User", { _id: userId });
+      const User = models("User");
+      ctx.body = await User.findOne({ _id: userId });
     }
   },
   models: {

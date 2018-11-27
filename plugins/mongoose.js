@@ -22,8 +22,36 @@ const MongooseUtils = {
     const model = mongoose.models[name];
     return _.pick(values, _.keys(model.schema));
   },
-  model(name) {
+  models(name) {
     return mongoose.models[name];
+  },
+  createOne: name => async (ctx, next) => {
+    const model = mongoose.models[name];
+    ctx.body = await model.create(ctx.request.body);
+  },
+  pagination: name => async (ctx, next) => {
+    const params = ctx.query;
+    for (let [k, v] of Object.entries(params)) {
+      params[k] = JSON.parse(v);
+    }
+    const model = mongoose.models[name];
+    ctx.body = await model.paginate(params.query || {}, params.paginate || {});
+  },
+  findById: name => async ctx => {
+    if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
+    const model = mongoose.models[name];
+    ctx.body = await model.findOne(ctx.params);
+  },
+  updateById: name => async ctx => {
+    const data = utils.convertParams(name, ctx.request.body);
+    const model = mongoose.models[name];
+    await model.updateOne(ctx.query, data);
+    ctx.body = await model.findOne(ctx.query);
+  },
+  removeById: name => async ctx => {
+    if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
+    const model = mongoose.models[name];
+    ctx.bodt = await model.deleteOne(ctx.params);
   }
 };
 
@@ -63,36 +91,6 @@ module.exports = {
         }
       );
       console.success("mongodb start~~~");
-    }
-  },
-  controllers: {
-    createOne: name => async (ctx, next) => {
-      const model = mongoose.models[name];
-      return model.create(ctx.request.body);
-    },
-    pagination: name => async (ctx, next) => {
-      const params = ctx.query;
-      for (let [k, v] of Object.entries(params)) {
-        params[k] = JSON.parse(v);
-      }
-      const model = mongoose.models[name];
-      ctx.body = await model.paginate(params.query || {}, params.paginate || {});
-    },
-    findById: name => async ctx => {
-      if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
-      const model = mongoose.models[name];
-      ctx.body = await model.findOne(ctx.params);
-    },
-    updateById: name => async ctx => {
-      const data = utils.convertParams(name, ctx.request.body);
-      const model = mongoose.models[name];
-      await model.updateOne(ctx.query, data);
-      ctx.body = await model.findOne(ctx.query);
-    },
-    removeById: name => async ctx => {
-      if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
-      const model = mongoose.models[name];
-      ctx.bodt = await model.deleteOne(ctx.params);
     }
   },
   MongooseUtils
