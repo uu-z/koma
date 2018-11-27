@@ -1,6 +1,6 @@
 {
   "name": "koma",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -L examples/simple/app.js"
