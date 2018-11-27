@@ -13,7 +13,7 @@ koma.$use({
         load: true
       },
       "redis-cache": {
-        load: true
+        load: false
       }
     },
     load: {

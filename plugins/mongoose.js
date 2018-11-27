@@ -17,6 +17,16 @@ globalPlugins.forEach(plugin => {
   mongoose.plugin(plugin);
 });
 
+const MongooseUtils = {
+  convertParams(name, values) {
+    const model = mongoose.models[name];
+    return _.pick(values, _.keys(model.schema));
+  },
+  model(name) {
+    return mongoose.models[name];
+  }
+};
+
 exports.mongoose = mongoose;
 module.exports = {
   name: "Mongoose",
@@ -55,30 +65,35 @@ module.exports = {
       console.success("mongodb start~~~");
     }
   },
-  MongooseUtils: {
-    convertParams(name, values) {
+  controllers: {
+    createOne: name => async (ctx, next) => {
       const model = mongoose.models[name];
-      return _.pick(values, _.keys(model.schema));
+      return model.create(ctx.request.body);
     },
-    model(name) {
-      return mongoose.models[name];
-    },
-    create(name, params) {
+    pagination: name => async (ctx, next) => {
+      const params = ctx.query;
+      for (let [k, v] of Object.entries(params)) {
+        params[k] = JSON.parse(v);
+      }
       const model = mongoose.models[name];
-      return model.create(params);
+      ctx.body = await model.paginate(params.query || {}, params.paginate || {});
     },
-    findOne(name, params) {
+    findById: name => async ctx => {
+      if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
       const model = mongoose.models[name];
-      return model.findOne(params);
+      ctx.body = await model.findOne(ctx.params);
     },
-    updateOne(name, query, values) {
-      const data = utils.convertParams(name, values);
+    updateById: name => async ctx => {
+      const data = utils.convertParams(name, ctx.request.body);
       const model = mongoose.models[name];
-      return model.updateOne(query, data);
+      await model.updateOne(ctx.query, data);
+      ctx.body = await model.findOne(ctx.query);
     },
-    paginate(name, query, paginate) {
+    removeById: name => async ctx => {
+      if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
       const model = mongoose.models[name];
-      return model.paginate(query, paginate);
+      ctx.bodt = await model.deleteOne(ctx.params);
     }
-  }
+  },
+  MongooseUtils
 };

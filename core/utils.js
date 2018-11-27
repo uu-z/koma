@@ -26,17 +26,21 @@ module.exports = {
         $({ _key, _val }) {
           const key = `${name}.${_key}`;
           const target = _.get(Mhr, key, {});
-          _.set(Mhr, key, {
-            ...target,
-            fn: _val,
-            ...inject
-          });
+          _.set(Mhr, key, _val);
+        }
+      };
+    },
+    injectFunctionArray(name) {
+      return {
+        F({ _val }) {
+          let target = _.get(Mhr, name, []);
+          _.set(Mhr, name, [...target, _val]);
         }
       };
     },
     injectObject(name) {
       return {
-        _({ _val }) {
+        O({ _val }) {
           let target = _.get(Mhr, name, {});
           _.set(Mhr, name, { ...target, ..._val });
         }

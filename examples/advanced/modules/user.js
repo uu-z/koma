@@ -3,14 +3,15 @@ const utils = require("../utils");
 
 module.exports = {
   name: "User",
-  routes: {
-    "get /users/:_id": "findUser",
-    "get /users": "listUser",
-    "get /me": "checkToken|me",
-    "post /signup": "signUp",
-    "post /login": "checkLogin|login",
-    "put /users/:_id": "updateUser"
-  },
+  routes: ({ checkToken, checkLogin, login, createOne, me, findById, pagination, updateById, removeById }) => ({
+    "get /users/:_id": findById("User"),
+    "get /users": pagination("User"),
+    "get /me": [checkToken, me],
+    "post /signup": createOne("User"),
+    "post /login": [checkLogin, login],
+    "put /users/:_id": updateById("User"),
+    "delete /users/:_id": removeById("User")
+  }),
   joi: {
     checkToken: {
       headers: {
@@ -25,28 +26,10 @@ module.exports = {
     }
   },
   controllers: {
-    async signUp(ctx, next) {
-      ctx.body = await utils.create("User", ctx.request.body);
-    },
-    async listUser(ctx, next) {
-      const params = ctx.query;
-      for (let [k, v] of Object.entries(params)) {
-        params[k] = JSON.parse(v);
-      }
-      ctx.body = await utils.paginate("User", params.query || {}, params.paginate || {});
-    },
-    async findUser(ctx) {
-      if (!ctx.params._id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
-      ctx.body = await utils.findOne("User", ctx.query);
-    },
-    async updateUser(ctx) {
-      await utils.updateOne("User", ctx.query, ctx.request.body);
-      ctx.body = await utils.findOne("User", ctx.query);
-    },
     async login(ctx) {
       const { identifier, password } = ctx.request.body;
       const user = await utils
-        .findOne("User", { $or: [{ email: identifier }, { username: identifier }] })
+        .findByIdOne("User", { $or: [{ email: identifier }, { username: identifier }] })
         .select("+password");
       if (!user) {
         return ctx.notFound;
@@ -64,7 +47,6 @@ module.exports = {
       ctx.body = await utils.findOne("User", { _id: userId });
     }
   },
-  services: {},
   models: {
     User: {
       schema: {

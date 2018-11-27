@@ -9,24 +9,30 @@ const router = new Router();
 exports.router = router;
 module.exports = {
   name: "Router",
-  $routes: utils.injectObject("routes"),
+  $routes: {
+    ...utils.injectFunctionArray("routes_F"),
+    ...utils.injectObject("routes")
+  },
   $start: {
     app({ _val: app }) {
-      Mhr.$use({
-        start: { router: true }
+      Mhr.$use({ start: { router: true } });
+      let objRoutes = _.get(Mhr, "routes", {});
+      let fnRoutes = _.get(Mhr, "routes_F", []);
+      let methods = _.get(Mhr, "methods", {});
+      fnRoutes.forEach(fn => {
+        objRoutes = { ...objRoutes, ...fn(methods) };
       });
-      this.RouterUtils.InjectRoutes({ app });
+      this.RouterUtils.InjectObjectRoutes({ routes: objRoutes, app });
     }
   },
   RouterUtils: {
-    InjectRoutes({ app }) {
-      const routes = _.get(Mhr, "routes", {});
+    InjectObjectRoutes({ routes, app }) {
       Mhr.$use({ start: { routes } });
       _.each(routes, (val, key) => {
         let fn, fns;
         if (typeof val == "string") {
           fns = val.split("|").map(key => {
-            const method = _.get(Mhr, `methods.${key}.fn`);
+            const method = _.get(Mhr, `methods.${key}`);
             if (!method) {
               throw new Error(`routes: method ${key} not exists`);
             }
