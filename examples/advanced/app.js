@@ -4,7 +4,7 @@ koma.$use({
   start: {
     metas: {
       mongoose: { load: true },
-      graphql: { load: true },
+      graphql: { load: true, depends_on: ["mongoose"] },
       redis: { load: true }
     },
     load: {

@@ -94,7 +94,14 @@ module.exports = {
               return load && depends_valid;
             },
             mapValue(v, b) {
-              return v.name ? v : {};
+              if (!v.name) {
+                return {};
+              }
+              if (v.ignore) {
+                v = _.omit(v, v.ignore);
+              }
+
+              return v;
             }
           })
         )

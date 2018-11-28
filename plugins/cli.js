@@ -1,39 +1,53 @@
 const Mhr = require("menhera").default;
-const cac = require("cac");
 const _ = require("lodash");
-const cli = cac();
+const cli = require("cac")();
 
 module.exports = {
   name: "CLI",
   $commands: {
     $({ _key: name, _val }) {
-      const { handler, ...other } = _val;
-      const key = `cli.commands.${name}`;
-      let command = _.get(Mhr, key);
-      Mhr.$use({ $_commands: { [name]: ({ _val: { input, flags } }) => handler(input, flags) } });
-      if (command && other.options) {
+      const { desc, options, examples, action } = _val;
+      let command = cli.command(name, desc);
+      if (options) {
         _.each((val, key) => {
-          command.option(key, val);
+          const { desc, ...other } = val;
+          command.option(key, desc, other);
         });
-      } else {
-        command = cli.command(name, other, (input, flags) => {
-          Mhr.$use({ _commands: { [name]: { input, flags } } });
+      }
+      if (examples) {
+        examples.forEach(example => {
+          command.example(example);
         });
-        _.set(Mhr, key, command);
+      }
+      if (action) {
+        command.action(() => {
+          let obj;
+          cli.args.forEach(arg => {
+            _.set;
+          });
+        });
       }
     }
   },
   $start: {
-    app({ _val }) {
-      cli.parse();
-      console.success("cli start~~~");
-    }
-  },
-  commands: {
-    "*": {
-      desc: "The default command",
-      options: {},
-      handler: (input, flags) => {}
+    cli: {
+      _({ _val }) {
+        const { version } = _val;
+        cli.version(version);
+        cli.help();
+        cli.parse();
+      },
+      dev({ _val }) {
+        if (_val) console.success("cli start~~~");
+      }
     }
   }
+  // commands: {
+  //   "": {
+  //     desc: "The default command",
+  //     options: {},
+  //     examples:[],
+  //     action: (input, flags) => {}
+  //   }
+  // }
 };
