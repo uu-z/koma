@@ -22,20 +22,20 @@ module.exports = {
   name: "User",
   routes: ({ checkToken, checkLogin, login, me }) => ({
     "get /users": pagination("User"),
-    "get /users/:id": findById("User"),
     "get /users/many": findMany("User"),
     "get /users/one": findOne("User"),
     "get /users/count": count("User"),
+    "get /users/:id": findById("User"),
     "get /me": [checkToken, me],
     "post /login": [checkLogin, login],
     "post /signup": createOne("User"),
     "post /users/many": createMany("User"),
-    "put /users/:id": updateById("User"),
     "put /users/many": updateMany("User"),
     "put /users/one": updateOne("User"),
-    "delete /users/:id": deleteById("User"),
+    "put /users/:id": updateById("User"),
     "delete /users/many": deleteMany("User"),
-    "delete /users/one": deleteOne("User")
+    "delete /users/one": deleteOne("User"),
+    "delete /users/:id": deleteById("User")
   }),
   controllers: {
     async login(ctx) {

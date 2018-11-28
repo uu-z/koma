@@ -52,7 +52,7 @@ const MongooseUtils = {
     });
   },
   findById: name => async ctx => {
-    if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
+    if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.throw(404, "Not Found");
     const model = mongoose.models[name];
     ctx.body = await model.findById(ctx.params.id);
   },
@@ -78,19 +78,19 @@ const MongooseUtils = {
     ctx.body = await model.count(filter);
   },
   updateById: name => async ctx => {
+    if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.throw(404, "Not Found");
     const data = MongooseUtils.convertParams(name, ctx.request.body);
     const model = mongoose.models[name];
-    const { id } = ctx.query;
-    ctx.body = await model.findByIdAndUpdate(id, data);
+    ctx.body = await model.findByIdAndUpdate(ctx.params.id, data);
   },
-  updateOne: naem => async ctx => {
+  updateOne: name => async ctx => {
     const { filter } = aqp(ctx.query);
     const data = MongooseUtils.convertParams(name, ctx.request.body);
     const model = mongoose.models[name];
 
     ctx.body = await model.findOneAndUpdate(filter, data);
   },
-  updateMany: naem => async ctx => {
+  updateMany: name => async ctx => {
     const { filter } = aqp(ctx.query);
     const model = mongoose.models[name];
     const { docs } = ctx.request.body;
@@ -98,7 +98,7 @@ const MongooseUtils = {
     ctx.body = await model.updateMany(filter, datas);
   },
   deleteById: name => async ctx => {
-    if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.notFound();
+    if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.throw(404, "Not Found");
     const model = mongoose.models[name];
     ctx.bodt = await model.findByIdAndDelete(ctx.params.id);
   },
