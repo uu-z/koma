@@ -54,7 +54,7 @@ koma.$use({
 
 ```js
 const _ = require("lodash");
-const { MongooseUtils } = require("../../../plugins/mongoose");
+const { MongooseUtils } = require("koma/plugins/mongoose");
 
 const {
   findById,
