@@ -54,21 +54,43 @@ koma.$use({
 
 ```js
 const _ = require("lodash");
-const { utils } = require("koma");
-const { MongooseUtils } = require("koma/plugins/mongoose");
+const { MongooseUtils } = require("../../../plugins/mongoose");
 
-const { findById, pagination, createOne, updateById, removeById, models } = MongooseUtils;
+const {
+  findById,
+  findMany,
+  findOne,
+  pagination,
+  createOne,
+  createMany,
+  updateById,
+  updateMany,
+  updateOne,
+  deleteById,
+  deleteMany,
+  deleteOne,
+  count,
+  models
+} = MongooseUtils;
 
 module.exports = {
   name: "User",
   routes: ({ checkToken, checkLogin, login, me }) => ({
-    "get /users/:_id": findById("User"),
     "get /users": pagination("User"),
+    "get /users/:id": findById("User"),
+    "get /users/many": findMany("User"),
+    "get /users/one": findOne("User"),
+    "get /users/count": count("User"),
     "get /me": [checkToken, me],
-    "post /signup": createOne("User"),
     "post /login": [checkLogin, login],
-    "put /users/:_id": updateById("User"),
-    "delete /users/:_id": removeById("User")
+    "post /signup": createOne("User"),
+    "post /users/many": createMany("User"),
+    "put /users/:id": updateById("User"),
+    "put /users/many": updateMany("User"),
+    "put /users/one": updateOne("User"),
+    "delete /users/:id": deleteById("User"),
+    "delete /users/many": deleteMany("User"),
+    "delete /users/one": deleteOne("User")
   }),
   controllers: {
     async login(ctx) {

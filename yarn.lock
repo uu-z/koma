@@ -339,6 +339,11 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
+api-query-params@^4.8.1:
+  version "4.8.1"
+  resolved "https://registry.npmjs.org/api-query-params/-/api-query-params-4.8.1.tgz#88a874c904783693f7bfa5cad181006331f734af"
+  integrity sha512-vgrJiQdWRcjX2plpoUylCZ7DLLFS4zq8HYaGTMK5hZfOODxFwrzNqg+5d5VJ3HaO4a6FcZ57lC8oIUWC2HlPDg==
+
 append-field@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/append-field/-/append-field-0.1.0.tgz#6ddc58fa083c7bc545d3c5995b2830cc2366d44a"

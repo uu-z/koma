@@ -22,6 +22,7 @@
     "@types/mongoose-unique-validator": "^1.0.1",
     "@types/passport": "^0.4.7",
     "@types/signale": "^1.2.0",
+    "api-query-params": "^4.8.1",
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "busboy": "^0.2.14",
