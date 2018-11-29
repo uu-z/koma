@@ -59,7 +59,7 @@ const { findById, pagination, updateById, done, models } = MongooseUtils;
 
 module.exports = {
   name: "User",
-  routes: ({ checkMe }) => ({
+  routes: () => ({
     "get /users": done(pagination("User")),
     "get /users/:id": done(findById("User")),
     "put /users/:id": done(updateById("User"))
@@ -72,6 +72,9 @@ module.exports = {
         username: { type: "string", required: true, unique: true },
         email: { type: "string", required: true, unique: true },
         password: { type: "string", select: false, required: true, bcrypt: true, hidden: true }
+      },
+      options: {
+        timestamp: true
       }
     }
   }
