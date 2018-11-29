@@ -31,21 +31,24 @@ koma.$use({
 after start advanced example. you can open `http://localhost:8001/playground` to play with graphql playground
 
 ```js
-const { koma } = require("koma");
+const { koma } = require("../../index");
+const path = require("path");
 
 koma.$use({
   start: {
     metas: {
       mongoose: { load: true },
-      graphql: { load: true },
-      redis: { load: true }
+      graphql: { load: true, depends_on: ["mongoose"] },
+      redis: { load: true },
+      kue: { load: true }
     },
     load: {
       plugins: [],
-      modules: ["./examples/advanced/modules"]
+      modules: [path.join(__dirname, "./modules")]
     },
     config: {
       PORT: 8001,
+      KUE_PORT: 8002,
       RUN: true
     }
   }
