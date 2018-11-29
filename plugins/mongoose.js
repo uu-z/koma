@@ -7,21 +7,23 @@ const hidden = require("mongoose-hidden");
 const autopopulate = require("mongoose-autopopulate");
 const bcrypt = require("mongoose-bcrypt");
 const aqp = require("api-query-params");
+// const relationship = require("mongoose-relationship");
 
 paginate.options = {
   lean: true,
   limit: 20
 };
 
-const globalPlugins = [bcrypt, hidden, autopopulate, uniqueValidator, paginate];
-globalPlugins.forEach(plugin => {
-  mongoose.plugin(plugin);
+const globalPlugins = { bcrypt, hidden, autopopulate, uniqueValidator, paginate };
+
+["bcrypt", "hidden", "autopopulate", "uniqueValidator", "paginate"].forEach(plugin => {
+  mongoose.plugin(globalPlugins[plugin]);
 });
 
 const MongooseUtils = {
   convertParams(name, values) {
     const model = mongoose.models[name];
-    return _.pick(values, _.keys(model.schema));
+    return _.pick(values, _.keys(model.schema.obj));
   },
   done: fn => async ctx => {
     ctx.body = await fn(ctx);
@@ -40,14 +42,17 @@ const MongooseUtils = {
     const model = mongoose.models[name];
     return await model.insertMany(ctx.request.body);
   },
-  pagination: name => async ctx => {
+  pagination: (name, option) => async ctx => {
     const { populate, page, lean = true } = ctx.query;
     const { filter, skip: offset, limit = 10, sort = "-createdAt", projection: select } = aqp(ctx.query, {
-      blacklist: ["page", "populate"]
+      blacklist: ["page", "populate", "lean"]
     });
-    const options = _.omitBy({ select, sort, populate, offset, limit, page, lean }, _.isUndefined);
+    const options = _.omitBy(
+      { select, sort, populate: option.populate || populate, offset, limit, page, lean },
+      _.isUndefined
+    );
     const model = mongoose.models[name];
-    return await model.paginate(filter, options);
+    return await model.paginate(option.query || filter, options);
   },
   findById: name => async ctx => {
     if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.throw(404, "Not Found");
@@ -60,9 +65,9 @@ const MongooseUtils = {
     return await model.findOne(filter);
   },
   findMany: name => async ctx => {
-    const { populate } = ctx.query;
+    const { populate = "", lean = true } = ctx.query;
     const { filter, skip, limit = 10, sort = "-createdAt", projection: select } = aqp(ctx.query, {
-      blacklist: ["page", "populate"]
+      blacklist: ["populate", "lean"]
     });
     const model = mongoose.models[name];
     return await model
@@ -83,14 +88,14 @@ const MongooseUtils = {
     if (!ctx.params.id.match(/^[0-9a-fA-F]{24}$/)) return ctx.throw(404, "Not Found");
     const data = MongooseUtils.convertParams(name, ctx.request.body);
     const model = mongoose.models[name];
-    return await model.findByIdAndUpdate(ctx.params.id, data);
+    return await model.findByIdAndUpdate(ctx.params.id, data, { new: true });
   },
   updateOne: name => async ctx => {
     const { filter } = aqp(ctx.query);
     const data = MongooseUtils.convertParams(name, ctx.request.body);
     const model = mongoose.models[name];
 
-    return await model.findOneAndUpdate(filter, data).exec();
+    return await model.findOneAndUpdate(filter, data, { new: true }).exec();
   },
   updateMany: name => async ctx => {
     const { filter } = aqp(ctx.query);
@@ -118,19 +123,16 @@ const MongooseUtils = {
 
 module.exports = {
   name: "Mongoose",
-  ignore: ["mongoose"],
   mongoose,
   $models: {
     $({ _key, _val, cp }) {
-      const { schema = {}, plugins = [], set = {}, methods = {} } = _val;
-      _.each(schema, (val, key) => {
-        if (val.type == "ObjectId") {
-          _.set(schema[key], "type", mongoose.SchemaTypes.ObjectId);
-        }
+      const { schema = {}, plugins = {}, set = {}, methods = {}, virtuals, options } = _val;
+      const Schema = new mongoose.Schema(schema, options || { timestamps: true });
+      _.each(virtuals, (val, key) => {
+        Schema.virtual(key, val);
       });
-      const Schema = new mongoose.Schema(schema, { timestamps: true });
-      plugins.forEach(plugin => {
-        Schema.plugin(plugin);
+      _.each(plugins, (val, key) => {
+        Schema.plugin(globalPlugins[key], val);
       });
       _.each(set, (val, key) => {
         Schema.set(key, val);
