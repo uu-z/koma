@@ -1,4 +1,5 @@
 const { koma } = require("../../index");
+const path = require("path");
 
 koma.$use({
   start: {
@@ -10,7 +11,7 @@ koma.$use({
     },
     load: {
       plugins: [],
-      modules: ["./examples/advanced/modules"]
+      modules: [path.join(__dirname, "./modules")]
     },
     config: {
       PORT: 8001,
