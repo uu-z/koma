@@ -39,6 +39,7 @@ module.exports = {
       await next();
     }
   },
+  models: {},
   joi: {
     checkLogin: {
       body: {

@@ -3,42 +3,53 @@ const { MongooseUtils, mongoose } = require("../../../plugins/mongoose");
 const { pagination, models } = MongooseUtils;
 const { SchemaTypes, Types } = mongoose;
 
-const { ActivityFeedUtils } = require("./activityFeed");
+const { notify } = require("../utils");
 
 module.exports = {
   name: "Follow",
-  routes: ({ follow, checkMe, checkFollow, unfollow }) => ({
-    "get /following/:userId": "followingList",
-    "get /follower/:userId": "followerList",
-    "post /follow": [checkMe, checkFollow, follow],
-    "post /unfollow": [checkMe, checkFollow, unfollow]
+  routes: ({ follow, checkToken, checkFollow, unfollow }) => ({
+    "get /following/:username": "followingList",
+    "get /follower/:username": "followerList",
+    "post /follow": [checkToken, checkFollow, follow],
+    "post /unfollow": [checkToken, checkFollow, unfollow]
   }),
   controllers: {
     async followerList(ctx) {
-      const { userId } = ctx.params;
-      ctx.body = await pagination("Follow", { query: { followId: userId }, populate: "userId" })(ctx);
+      const { username } = ctx.params;
+      const User = models("User");
+      const user = await User.findOne({ username }).select("_id");
+      ctx.body = await pagination("Follow", { query: { followId: user._id }, populate: "userId" })(ctx);
     },
     async followingList(ctx) {
-      const { userId } = ctx.params;
-      ctx.body = await pagination("Follow", { query: { userId }, populate: "followId" })(ctx);
+      const { username } = ctx.params;
+      const User = models("User");
+      const user = await User.findOne({ username }).select("_id");
+      ctx.body = await pagination("Follow", { query: { userId: user._id }, populate: "followId" })(ctx);
     },
     async follow(ctx) {
       const Follow = models("Follow");
       const userId = _.get(ctx, "state.user.data");
       const { followId } = ctx.request.body;
-      const exists = Follow.findOne({ userId, followId });
+      const exists = await Follow.findOne({ userId, followId });
       if (exists) {
         ctx.throw(400, "The user has alread followed ");
       } else {
         let follow = await Follow.create({ userId, followId });
         ctx.body = follow;
-        ActivityFeedUtils.create({
-          actor: userId,
-          actorType: "User",
-          object: follow._id,
-          objectType: "Follow",
-          action: "follow"
-        });
+
+        notify
+          .activity({
+            actor: userId,
+            actorType: "User",
+            object: followId,
+            objectType: "User",
+            action: "follow"
+          })
+          .notification({
+            from: userId,
+            to: followId,
+            action: "follow"
+          });
       }
     },
     async unfollow(ctx) {

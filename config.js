@@ -35,7 +35,9 @@ const settings = {
       metas: {
         middlewares: { load: true },
         joi: { load: true },
+        event: { load: true },
         upload: { load: false },
+        kue: { load: false },
         schedule: { load: false },
         graphql: { load: false, depends_on: ["mongoose"] },
         mongoose: { load: false },

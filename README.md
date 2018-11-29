@@ -62,7 +62,7 @@ module.exports = {
   routes: ({ checkMe }) => ({
     "get /users": done(pagination("User")),
     "get /users/:id": done(findById("User")),
-    "put /users/:id": [checkMe, done(updateById("User"))]
+    "put /users/:id": done(updateById("User"))
   }),
   controllers: {},
   models: {

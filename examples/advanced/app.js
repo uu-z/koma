@@ -5,7 +5,8 @@ koma.$use({
     metas: {
       mongoose: { load: true },
       graphql: { load: true, depends_on: ["mongoose"] },
-      redis: { load: true }
+      redis: { load: true },
+      kue: { load: true }
     },
     load: {
       plugins: [],
@@ -13,6 +14,7 @@ koma.$use({
     },
     config: {
       PORT: 8001,
+      KUE_PORT: 8002,
       RUN: true
     }
   }

@@ -7,7 +7,6 @@ const hidden = require("mongoose-hidden");
 const autopopulate = require("mongoose-autopopulate");
 const bcrypt = require("mongoose-bcrypt");
 const aqp = require("api-query-params");
-// const relationship = require("mongoose-relationship");
 
 paginate.options = {
   lean: true,
@@ -32,6 +31,9 @@ const MongooseUtils = {
     return arr.map(val => MongooseUtils.convertParams(name, val));
   },
   models(name) {
+    if (_.isArray(name)) {
+      return name.map(v => mongoose.models[v]);
+    }
     return mongoose.models[name];
   },
   createOne: (name, options) => async ctx => {
@@ -42,7 +44,7 @@ const MongooseUtils = {
     const model = mongoose.models[name];
     return await model.insertMany(ctx.request.body);
   },
-  pagination: (name, option) => async ctx => {
+  pagination: (name, option = {}) => async ctx => {
     const { populate, page, lean = true } = ctx.query;
     const { filter, skip: offset, limit = 10, sort = "-createdAt", projection: select } = aqp(ctx.query, {
       blacklist: ["page", "populate", "lean"]
@@ -126,8 +128,8 @@ module.exports = {
   mongoose,
   $models: {
     $({ _key, _val, cp }) {
-      const { schema = {}, plugins = {}, set = {}, methods = {}, virtuals, options } = _val;
-      const Schema = new mongoose.Schema(schema, options || { timestamps: true });
+      const { schema = {}, plugins = {}, set = {}, methods = {}, virtuals, options = {} } = _val;
+      const Schema = new mongoose.Schema(schema, options);
       _.each(virtuals, (val, key) => {
         Schema.virtual(key, val);
       });

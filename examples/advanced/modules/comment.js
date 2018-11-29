@@ -3,14 +3,42 @@ const { MongooseUtils, mongoose } = require("../../../plugins/mongoose");
 const { models } = MongooseUtils;
 const { SchemaTypes, Types } = mongoose;
 
+const { notify } = require("../utils");
+
 module.exports = {
   name: "Comment",
+  routes: ({ checkToken, checkComment, comment }) => ({
+    "post /comment": [checkToken, checkComment, comment]
+  }),
+  controllers: {
+    async comment(ctx) {
+      const commentAuthor = _.get(ctx.state, "user.data");
+      const Comment = models("Comment");
+      const { postId, postType, text } = ctx.request.body;
+
+      ctx.body = await Comment.create({ author: commentAuthor, postId, postType, text });
+      const post = await models(postType)
+        .findById(postId)
+        .select("author");
+      notify.notification({ from: commentAuthor, to: post.author, action: "comment" });
+    }
+  },
   models: {
     Comment: {
       schema: {
-        userId: { type: SchemaTypes.ObjectId, ref: "User", required: true },
-        tweetId: { type: SchemaTypes.ObjectId, ref: "Tweet", required: true },
+        author: { type: SchemaTypes.ObjectId, ref: "User", required: true },
+        postId: { type: SchemaTypes.ObjectId, refPath: "postType", required: true },
+        postType: { type: "String", enum: ["Tweet"], required: true, default: "Tweet" },
         text: { type: "string", required: true }
+      }
+    }
+  },
+  joi: {
+    checkComment: {
+      body: {
+        text: "string:,required",
+        postId: "string:,required",
+        postType: "string:,required"
       }
     }
   }
