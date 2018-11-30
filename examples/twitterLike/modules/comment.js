@@ -1,8 +1,7 @@
 const _ = require("lodash");
 const { MongooseUtils, mongoose } = require("../../../plugins/mongoose");
 const { models } = MongooseUtils;
-const { SchemaTypes, Types } = mongoose;
-
+const { SchemaTypes } = mongoose;
 const { notify } = require("../utils");
 
 module.exports = {
@@ -13,10 +12,10 @@ module.exports = {
   controllers: {
     async comment(ctx) {
       const commentAuthor = _.get(ctx.state, "user.data");
-      const Comment = models("Comment");
       const { postId, postType, text } = ctx.request.body;
 
-      ctx.body = await Comment.create({ author: commentAuthor, postId, postType, text });
+      ctx.body = await models("Comment").create({ author: commentAuthor, postId, postType, text });
+
       const post = await models(postType)
         .findById(postId)
         .select("author");

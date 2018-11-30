@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const { MongooseUtils, mongoose } = require("../../../plugins/mongoose");
 const { pagination, models } = MongooseUtils;
-const { SchemaTypes, Types } = mongoose;
+const { SchemaTypes } = mongoose;
 
 module.exports = {
   name: "Notification",
@@ -11,8 +11,9 @@ module.exports = {
   controllers: {
     async NotificationList(ctx) {
       const { username } = ctx.params;
-      const User = models("User");
-      const user = await User.findOne({ username }).select("_id");
+      const user = await models("User")
+        .findOne({ username })
+        .select("_id");
 
       ctx.body = await pagination("Notification", { query: { to: user._id }, populate: "from" })(ctx);
     }

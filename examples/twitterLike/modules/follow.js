@@ -1,8 +1,7 @@
 const _ = require("lodash");
 const { MongooseUtils, mongoose } = require("../../../plugins/mongoose");
 const { pagination, models } = MongooseUtils;
-const { SchemaTypes, Types } = mongoose;
-
+const { SchemaTypes } = mongoose;
 const { notify } = require("../utils");
 
 module.exports = {
@@ -16,21 +15,24 @@ module.exports = {
   controllers: {
     async followerList(ctx) {
       const { username } = ctx.params;
-      const User = models("User");
-      const user = await User.findOne({ username }).select("_id");
+      const user = await models("User")
+        .findOne({ username })
+        .select("_id");
       ctx.body = await pagination("Follow", { query: { followId: user._id }, populate: "userId" })(ctx);
     },
     async followingList(ctx) {
       const { username } = ctx.params;
-      const User = models("User");
-      const user = await User.findOne({ username }).select("_id");
+      const user = await models("User")
+        .findOne({ username })
+        .select("_id");
       ctx.body = await pagination("Follow", { query: { userId: user._id }, populate: "followId" })(ctx);
     },
     async follow(ctx) {
-      const Follow = models("Follow");
       const userId = _.get(ctx, "state.user.data");
       const { followId } = ctx.request.body;
+      const Follow = models("Follow");
       const exists = await Follow.findOne({ userId, followId });
+
       if (exists) {
         ctx.throw(400, "The user has alread followed ");
       } else {

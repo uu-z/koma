@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const { MongooseUtils, mongoose } = require("../../../plugins/mongoose");
+const { MongooseUtils } = require("../../../plugins/mongoose");
 const { findById, pagination, updateById, done, models } = MongooseUtils;
 
 module.exports = {

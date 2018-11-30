@@ -1,6 +1,5 @@
 const _ = require("lodash");
 const { MongooseUtils } = require("../../../plugins/mongoose");
-
 const { createOne, models, done } = MongooseUtils;
 
 module.exports = {
@@ -14,8 +13,9 @@ module.exports = {
     async login(ctx) {
       const { identifier, password } = ctx.request.body;
 
-      const User = models("User");
-      const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] }).select("+password");
+      const user = await models("User")
+        .findOne({ $or: [{ email: identifier }, { username: identifier }] })
+        .select("+password");
       if (!user) return ctx.thorw(404, "user not exists");
 
       const validPassword = await user.verifyPassword(password);
@@ -28,8 +28,7 @@ module.exports = {
     },
     async me(ctx) {
       const userId = _.get(ctx.state, "user.data");
-      const User = models("User");
-      ctx.body = await User.findOne({ _id: userId });
+      ctx.body = await models("User").findOne({ _id: userId });
     },
     async checkToken(ctx, next) {
       const userId = _.get(ctx.state, "user.data");

@@ -1,9 +1,8 @@
 const _ = require("lodash");
 const { MongooseUtils, mongoose } = require("../../../plugins/mongoose");
 const { pagination, models } = MongooseUtils;
-const { SchemaTypes, Types } = mongoose;
-
-const { queue } = require("../../../plugins/kue.js");
+const { SchemaTypes } = mongoose;
+const { queue } = require("../../../plugins/kue");
 
 queue.process("activity", 1, async (job, done) => {
   const { _id, actor, actorType } = job.data.activity;
