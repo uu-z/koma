@@ -7,6 +7,7 @@ koma.$use({
       mongoose: { load: true },
       graphql: { load: true, depends_on: ["mongoose"] },
       redis: { load: true },
+      "redis-cache": { load: true },
       kue: { load: true }
     },
     load: {

@@ -14,11 +14,11 @@ module.exports = {
     app() {
       console.success("redis start~~~");
     }
-  },
-  use: [
-    async (ctx, next) => {
-      ctx.redis = redis;
-      await next();
-    }
-  ]
+  }
+  // use: [
+  //   async (ctx, next) => {
+  //     ctx.redis = redis;
+  //     await next();
+  //   }
+  // ]
 };

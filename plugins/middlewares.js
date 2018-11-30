@@ -1,12 +1,9 @@
 const Mhr = require("menhera").default;
+const _ = require("lodash");
 const bodyParser = require("koa-bodyparser");
 const cors = require("@koa/cors");
-const koaJwt = require("koa-jwt");
-const jwt = require("jsonwebtoken");
-const _ = require("lodash");
 const helmet = require("koa-helmet");
-
-const { CORS, BODY_PARSER, JWT, JWT_EXP, JWT_SECRET, HELMET } = _.get(Mhr, "config", {});
+const { CORS, BODY_PARSER, HELMET } = _.get(Mhr, "config", {});
 
 module.exports = {
   name: "Middlewares",
@@ -14,19 +11,6 @@ module.exports = {
     bodyParser(BODY_PARSER),
     cors(CORS),
     helmet(HELMET),
-    koaJwt(JWT),
-    async (ctx, next) => {
-      ctx.signJWT = ({ data }) => {
-        return jwt.sign({ data, exp: JWT_EXP }, JWT_SECRET);
-      };
-      await next();
-    },
-    async (ctx, next) => {
-      const start = new Date();
-      await next();
-      const ms = new Date() - start;
-      console.info(`-> ${ctx.method} ${ctx.url} - ${ms}ms`);
-    },
     async (ctx, next) => {
       try {
         await next();

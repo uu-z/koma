@@ -2,7 +2,6 @@ const Mhr = require("menhera").default;
 const Koa = require("koa");
 const _ = require("lodash");
 const { utils } = require("./utils");
-const http = require("http");
 const app = new Koa();
 
 exports.app = app;
@@ -22,6 +21,7 @@ module.exports = {
 
         const { PORT } = Mhr.config;
         Mhr.$use({ start: { app } });
+        const http = require("http");
         const server = http.createServer(app.callback());
         Mhr.$use({ start: { server } });
         server.listen(PORT);

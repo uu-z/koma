@@ -14,7 +14,7 @@ const {
   JWT_EXP = Math.floor(Date.now() / 1000) + 60 * 60 * 12
 } = process.env;
 
-const env = {
+const config = {
   IS_PROD: NODE_ENV == "prod",
   NODE_ENV,
   HOST,
@@ -26,7 +26,21 @@ const env = {
   MONGO_URL,
   MONGO_DATABASE,
   JWT_SECRET,
-  JWT_EXP
+  JWT_EXP,
+  CORS: { origin: "*" },
+  KUE_PORT: 8002,
+  REDIS_CACHE: {
+    redis: {
+      host: REDIS_HOST,
+      port: REDIS_PORT
+    },
+    onerror(err) {
+      console.log(err);
+    }
+  },
+  BODY_PARSER: {},
+  HELMET: {},
+  JWT: { secret: JWT_SECRET, passthrough: true }
 };
 
 const settings = {
@@ -37,6 +51,8 @@ const settings = {
         joi: { load: true },
         event: { load: true },
         upload: { load: false },
+        jwt: { load: false },
+        logger: { load: false },
         kue: { load: false },
         schedule: { load: false },
         graphql: { load: false, depends_on: ["mongoose"] },
@@ -50,11 +66,7 @@ const settings = {
         cli: { load: false }
       },
       config: {
-        ...env,
-        CORS: { origin: "*" },
-        BODY_PARSER: {},
-        HELMET: {},
-        JWT: { secret: JWT_SECRET, passthrough: true }
+        ...config
       },
       load: {
         plugins: [path.resolve(__dirname, "./plugins")],
@@ -68,11 +80,7 @@ const settings = {
         graphql: { depends_on: ["mongoose"] }
       },
       config: {
-        ...env,
-        CORS: { origin: "*" },
-        BODY_PARSER: {},
-        HELMET: {},
-        JWT: { secret: JWT_SECRET, passthrough: true }
+        ...config
       },
       load: {
         plugins: [path.resolve(__dirname, "./plugins")],
@@ -83,6 +91,6 @@ const settings = {
 };
 const setting = settings[NODE_ENV];
 
-exports.env = env;
+exports.config = config;
 exports.settings = settings;
 exports.setting = setting;
