@@ -28,6 +28,9 @@ const config = {
   JWT_SECRET,
   JWT_EXP,
   CORS: { origin: "*" },
+  graphql: {
+    genSchemaFromMongoose: true
+  },
   KUE_PORT: 8002,
   REDIS_CACHE: {
     redis: {

@@ -83,7 +83,7 @@ module.exports = {
     load(dir) {
       dir = Array.isArray(dir) ? dir : [dir];
       return dir.map(val => ({
-        _mount: _.values(
+        mount: _.values(
           requireDir(path.resolve(val), {
             noCache: true,
             filter(file) {

@@ -143,10 +143,7 @@ module.exports = {
         Schema.methods.key = val;
       });
 
-      const model = mongoose.model(_key, Schema);
-      _val.model = model;
-      Object.assign(cp.models[_key], { model });
-      _.set(Mhr, `models.${_key}`, _val);
+      mongoose.model(_key, Schema);
     }
   },
   $start: {

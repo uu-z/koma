@@ -53,8 +53,7 @@ module.exports = {
   event: {
     on: {
       async activity({ actor, actorType, object, objectType, action }) {
-        const Activity = models("Activity");
-        const activity = await Activity.create({ actor, actorType, object, objectType, action });
+        const activity = await models("Activity").create({ actor, actorType, object, objectType, action });
         queue
           .create("activity", {
             title: `${actorType}:${actor} ${action} ${objectType}:${object}`,
