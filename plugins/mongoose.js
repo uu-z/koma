@@ -1,22 +1,34 @@
 const Mhr = require("menhera").default;
 const mongoose = require("mongoose");
 const _ = require("lodash");
-const uniqueValidator = require("mongoose-unique-validator");
-const paginate = require("mongoose-paginate");
-const hidden = require("mongoose-hidden");
-const autopopulate = require("mongoose-autopopulate");
-const bcrypt = require("mongoose-bcrypt");
 const aqp = require("api-query-params");
 
-paginate.options = {
-  lean: true,
-  limit: 20
+const {
+  MONGOOSE: {
+    dburl = "mongodb://localhost:27017/test",
+    plugins = {},
+    options = {
+      useCreateIndex: true,
+      useNewUrlParser: true
+    }
+  }
+} = _.get(Mhr, "config", {});
+
+const globalPlugins = {
+  "mongoose-unique-validator": {},
+  "mongoose-paginate": {
+    lean: true,
+    limit: 20
+  },
+  "mongoose-hidden": {},
+  "mongoose-autopopulate": {},
+  "mongoose-bcrypt": {},
+  ...plugins
 };
 
-const globalPlugins = { bcrypt, hidden, autopopulate, uniqueValidator, paginate };
-
-["bcrypt", "hidden", "autopopulate", "uniqueValidator", "paginate"].forEach(plugin => {
-  mongoose.plugin(globalPlugins[plugin]);
+_.each(globalPlugins, (options, name) => {
+  const plugin = require(name);
+  mongoose.plugin(plugin, options);
 });
 
 const MongooseUtils = {
@@ -126,15 +138,17 @@ const MongooseUtils = {
 module.exports = {
   name: "Mongoose",
   mongoose,
+  aqp,
   $models: {
     $({ _key, _val, cp }) {
-      const { schema = {}, plugins = {}, set = {}, methods = {}, virtuals, options = {} } = _val;
+      const { schema = {}, plugins = {}, set = {}, methods = {}, virtuals, options = {}, done } = _val;
       const Schema = new mongoose.Schema(schema, options);
       _.each(virtuals, (val, key) => {
         Schema.virtual(key, val);
       });
-      _.each(plugins, (val, key) => {
-        Schema.plugin(globalPlugins[key], val);
+      _.each(plugins, (option, key) => {
+        const plugin = require(key);
+        Schema.plugin(plugin, option);
       });
       _.each(set, (val, key) => {
         Schema.set(key, val);
@@ -143,18 +157,15 @@ module.exports = {
         Schema.methods.key = val;
       });
 
-      mongoose.model(_key, Schema);
+      const model = mongoose.model(_key, Schema);
+      done && done(model);
     }
   },
   $start: {
     async app() {
-      const { MONGO_URL, MONGO_DATABASE } = _.get(Mhr, "config", {});
       await mongoose.connect(
-        `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,
-        {
-          useCreateIndex: true,
-          useNewUrlParser: true
-        }
+        dburl,
+        options
       );
       console.success("mongodb start~~~");
     }

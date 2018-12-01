@@ -1,4 +1,4 @@
-const { koma } = require("../../index");
+const { koma, config } = require("../../index");
 const path = require("path");
 
 koma.$use({
@@ -7,12 +7,13 @@ koma.$use({
       mongoose: { load: true },
       graphql: { load: true, depends_on: ["mongoose"] },
       redis: { load: true },
-      // "redis-cache": { load: true },
-      kue: { load: true }
+      elasticsearch: { load: true },
+      kue: { load: true },
+      jwt: { load: true }
     },
     load: {
       plugins: [],
-      modules: [path.join(__dirname, "./modules")]
+      modules: ["modules", "helpers"].map(i => path.join(__dirname, i))
     },
     config: {
       PORT: 8001,

@@ -13,7 +13,9 @@ module.exports = {
     metas: utils.injectObjectDeep("metas"),
     load: utils.injectObjectArray("load"),
     config: {
-      ...utils.injectObject("config"),
+      // ...utils.injectObject("config"),
+      ...utils.injectObjectDeep("config"),
+      ...utils.injectVariableDeep("config"),
       RUN() {
         const { plugins = [], modules = [] } = _.get(Mhr, "load", {});
         Mhr.$use(utils.load(plugins)).$use({ start: { plugins: true } });

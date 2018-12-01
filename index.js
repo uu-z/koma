@@ -2,8 +2,9 @@ const Mhr = require("menhera").default;
 const { utils } = require("./core/utils");
 const _ = require("lodash");
 const path = require("path");
-const { setting } = require("./config");
+const { setting, config } = require("./config");
 
+exports.config = config;
 exports.koma = Mhr.$use({
   $mount: {
     $({ _val }) {

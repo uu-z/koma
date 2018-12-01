@@ -1,13 +1,13 @@
 const _ = require("lodash");
 const { MongooseUtils } = require("../../../plugins/mongoose");
-const { findById, pagination, updateById, done, models } = MongooseUtils;
+const { findById, pagination, updateById, done } = MongooseUtils;
 
 module.exports = {
   name: "User",
   routes: () => ({
     "get /users": done(pagination("User")),
     "get /users/:id": done(findById("User")),
-    "put /users/:id": done(updateById("User"))
+    "put /users/:id": ["checkToken", done(updateById("User"))]
   }),
   controllers: {},
   models: {

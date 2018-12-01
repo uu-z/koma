@@ -8,7 +8,7 @@ const koaPlayground = require("graphql-playground-middleware-koa").default;
 const { utils } = require("../core/utils");
 
 const {
-  graphql: {
+  GRAPHQL: {
     genSchemaFromMongoose = true,
     defaultSchema = {
       Query: ["findById", "findByIds", "findOne", "findMany", "count", "connection", "pagination"],

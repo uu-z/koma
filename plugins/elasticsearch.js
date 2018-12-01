@@ -1,22 +1,24 @@
 const Mhr = require("menhera").default;
-const es = require("koa-elasticsearch");
+const { Client } = require("elasticsearch");
 const _ = require("lodash");
 
-const { ES_PORT, ES_HOST } = _.get(Mhr, "config");
+const {
+  ES: {
+    options = {
+      host: "localhost:9200",
+      log: "trace"
+    }
+  }
+} = _.get(Mhr, "config");
+
+const es = new Client({ ...options });
 
 module.exports = {
   name: "ElasticeSearch",
+  es,
   $start: {
     app() {
       console.success("Elasticsearch start~~~");
     }
-  },
-  use: [
-    es({
-      host: {
-        host: ES_HOST,
-        port: ES_PORT
-      }
-    })
-  ]
+  }
 };

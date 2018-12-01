@@ -6,10 +6,10 @@ const { notify } = require("../utils");
 
 module.exports = {
   name: "Tweet",
-  routes: ({ checkToken, createTweet }) => ({
+  routes: () => ({
     "get /tweet": done(pagination("Tweet")),
     "get /tweet/:id": done(findById("Tweet")),
-    "post /tweet/": [checkToken, createTweet]
+    "post /tweet/": ["checkToken", "createTweet"]
   }),
   controllers: {
     async createTweet(ctx) {

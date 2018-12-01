@@ -2,8 +2,11 @@ const Mhr = require("menhera").default;
 const _ = require("lodash");
 const kue = require("kue");
 
-const { KUE_PORT = 8002, KUE_OPTION } = _.get(Mhr, "config", {});
-const queue = kue.createQueue(KUE_OPTION);
+const {
+  KUE_PORT = 8002,
+  KUE: { options = {} }
+} = _.get(Mhr, "config", {});
+const queue = kue.createQueue(options);
 
 module.exports = {
   name: "Kue",

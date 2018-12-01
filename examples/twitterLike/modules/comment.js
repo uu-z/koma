@@ -6,8 +6,8 @@ const { notify } = require("../utils");
 
 module.exports = {
   name: "Comment",
-  routes: ({ checkToken, checkComment, comment }) => ({
-    "post /comment": [checkToken, checkComment, comment]
+  routes: () => ({
+    "post /comment": ["checkToken|checkComment", "comment"]
   }),
   controllers: {
     async comment(ctx) {

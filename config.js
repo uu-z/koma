@@ -4,14 +4,12 @@ const {
   NODE_ENV = "prod",
   HOST = "localhost",
   PORT = 8001,
-  ES_HOST = "localhost",
-  ES_PORT = 9200,
+  ES_HOST = "localhost:9200",
   REDIS_HOST = "localhost",
   REDIS_PORT = 6379,
+  KUE_PORT = 8002,
   MONGO_URL = "localhost:27017",
-  MONGO_DATABASE = "test",
-  JWT_SECRET = "secred",
-  JWT_EXP = Math.floor(Date.now() / 1000) + 60 * 60 * 12
+  MONGO_DATABASE = "test"
 } = process.env;
 
 const config = {
@@ -20,18 +18,42 @@ const config = {
   HOST,
   PORT,
   ES_HOST,
-  ES_PORT,
   REDIS_HOST,
   REDIS_PORT,
   MONGO_URL,
   MONGO_DATABASE,
-  JWT_SECRET,
-  JWT_EXP,
+  KUE_PORT,
+  JWT: {
+    SECRET: "secred",
+    EXP: Math.floor(Date.now() / 1000) + 60 * 60 * 12,
+    passthrough: true
+  },
+  ES: {
+    options: {
+      host: ES_HOST
+    }
+  },
   CORS: { origin: "*" },
-  graphql: {
+  GRAPHQL: {
     genSchemaFromMongoose: true
   },
-  KUE_PORT: 8002,
+  MONGOOSE: {
+    dburl: `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,
+    plugins: {},
+    options: {
+      useCreateIndex: true,
+      useNewUrlParser: true
+    }
+  },
+  REDIS: {
+    options: {
+      host: REDIS_HOST,
+      port: REDIS_PORT
+    }
+  },
+  KUE: {
+    options: {}
+  },
   REDIS_CACHE: {
     redis: {
       host: REDIS_HOST,
@@ -42,8 +64,7 @@ const config = {
     }
   },
   BODY_PARSER: {},
-  HELMET: {},
-  JWT: { secret: JWT_SECRET, passthrough: true }
+  HELMET: {}
 };
 
 const settings = {
@@ -57,7 +78,7 @@ const settings = {
         jwt: { load: false },
         logger: { load: false },
         kue: { load: false },
-        schedule: { load: false },
+        cron: { load: false },
         graphql: { load: false, depends_on: ["mongoose"] },
         mongoose: { load: false },
         redis: { load: false },
@@ -79,9 +100,7 @@ const settings = {
   },
   dev: {
     start: {
-      metas: {
-        graphql: { depends_on: ["mongoose"] }
-      },
+      metas: {},
       config: {
         ...config
       },

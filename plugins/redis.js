@@ -2,11 +2,17 @@ const Mhr = require("menhera").default;
 const Redis = require("ioredis");
 const _ = require("lodash");
 
-const { REDIS_HOST, REDIS_PORT } = _.get(Mhr, "config", {});
-const redis = new Redis({
-  host: REDIS_HOST,
-  port: REDIS_PORT
-});
+const {
+  REDIS: {
+    options = {
+      host: "localhost",
+      port: 6379
+    }
+  }
+} = _.get(Mhr, "config", {});
+
+const redis = new Redis(options);
+
 module.exports = {
   name: "Redis",
   redis,

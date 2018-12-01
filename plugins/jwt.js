@@ -3,17 +3,13 @@ const koaJwt = require("koa-jwt");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 
-const { JWT } = _.get(Mhr, "config", {});
+const {
+  JWT,
+  JWT: { SECRET = "secred", EXP = Math.floor(Date.now() / 1000) + 60 * 60 * 12 }
+} = _.get(Mhr, "config", {});
 
 module.exports = {
   name: "JWT",
-  use: [
-    koaJwt(JWT),
-    async (ctx, next) => {
-      ctx.signJWT = ({ data }) => {
-        return jwt.sign({ data, exp: JWT_EXP }, JWT_SECRET);
-      };
-      await next();
-    }
-  ]
+  use: [koaJwt(JWT)],
+  signJWT: ({ data }) => jwt.sign({ data, exp: EXP }, SECRET)
 };

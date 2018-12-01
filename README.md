@@ -31,7 +31,7 @@ koma.$use({
 after start advanced example. you can open `http://localhost:8001/playground` to play with graphql playground
 
 ```js
-const { koma } = require("../../index");
+const { koma, config } = require("../../index");
 const path = require("path");
 
 koma.$use({
@@ -40,11 +40,12 @@ koma.$use({
       mongoose: { load: true },
       graphql: { load: true, depends_on: ["mongoose"] },
       redis: { load: true },
+      elasticsearch: { load: true },
       kue: { load: true }
     },
     load: {
       plugins: [],
-      modules: [path.join(__dirname, "./modules")]
+      modules: ["modules", "helpers"].map(i => path.join(__dirname, i))
     },
     config: {
       PORT: 8001,
@@ -65,7 +66,7 @@ module.exports = {
   routes: () => ({
     "get /users": done(pagination("User")),
     "get /users/:id": done(findById("User")),
-    "put /users/:id": done(updateById("User"))
+    "put /users/:id": ["checkToken", done(updateById("User"))]
   }),
   controllers: {},
   models: {

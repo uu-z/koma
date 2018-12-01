@@ -3,7 +3,7 @@ const _ = require("lodash");
 const requireDir = require("require-dir");
 const path = require("path");
 const signale = require("signale");
-global.Promies = require("bluebird");
+global.Promise = require("bluebird");
 
 const { error, debug, info, start, success, warn, log } = signale;
 
@@ -57,10 +57,18 @@ module.exports = {
     },
     injectObjectDeep(name) {
       return {
-        $({ _key, _val }) {
+        $O({ _key, _val }) {
           const key = `${name}.${_key}`;
           const target = _.get(Mhr, key, {});
           _.set(Mhr, key, { ...target, ..._val });
+        }
+      };
+    },
+    injectVariableDeep(name) {
+      return {
+        $V({ _key, _val }) {
+          const key = `${name}.${_key}`;
+          _.set(Mhr, key, _val);
         }
       };
     },
@@ -94,9 +102,6 @@ module.exports = {
               return load && depends_valid;
             },
             mapValue(v, b) {
-              if (!v.name) {
-                return {};
-              }
               if (v.ignore) {
                 v = _.omit(v, v.ignore);
               }

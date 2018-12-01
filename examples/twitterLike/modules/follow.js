@@ -6,11 +6,11 @@ const { notify } = require("../utils");
 
 module.exports = {
   name: "Follow",
-  routes: ({ follow, checkToken, checkFollow, unfollow }) => ({
+  routes: () => ({
     "get /following/:username": "followingList",
     "get /follower/:username": "followerList",
-    "post /follow": [checkToken, checkFollow, follow],
-    "post /unfollow": [checkToken, checkFollow, unfollow]
+    "post /follow": ["checkToken|checkFollow", "follow"],
+    "post /unfollow": ["checkToken|checkFollow", "unfollow"]
   }),
   controllers: {
     async followerList(ctx) {

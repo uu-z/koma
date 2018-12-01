@@ -4,9 +4,9 @@ const { createOne, models, done } = MongooseUtils;
 
 module.exports = {
   name: "Auth",
-  routes: ({ checkToken, checkLogin, login, me }) => ({
-    "get /me": [checkToken, me],
-    "post /login": [checkLogin, login],
+  routes: () => ({
+    "get /me": ["checkToken", "me"],
+    "post /login": ["checkLogin", "login"],
     "post /signup": done(createOne("User"))
   }),
   controllers: {
@@ -29,13 +29,6 @@ module.exports = {
     async me(ctx) {
       const userId = _.get(ctx.state, "user.data");
       ctx.body = await models("User").findOne({ _id: userId });
-    },
-    async checkToken(ctx, next) {
-      const userId = _.get(ctx.state, "user.data");
-      if (!userId) {
-        ctx.throw(401, "Authentication Error");
-      }
-      await next();
     }
   },
   models: {},
