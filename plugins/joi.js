@@ -9,7 +9,7 @@ module.exports = {
   $joi: {
     $({ _key, _val }) {
       const schema = builder.build(_val);
-      utils.injectMethods("methods", { type: "joi", validator: _val }).$({
+      utils.injectMethods("methods").$({
         _key,
         _val: validate(schema)
       });

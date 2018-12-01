@@ -2,6 +2,6 @@ const Mhr = require("menhera").default;
 const { utils } = require("./utils");
 
 module.exports = {
-  name: "Controller",
-  $controllers: utils.injectMethods("methods")
+  name: "validators",
+  $validators: utils.injectMethods("methods")
 };

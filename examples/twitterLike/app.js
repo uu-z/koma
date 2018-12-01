@@ -13,7 +13,7 @@ koma.$use({
     },
     load: {
       plugins: [],
-      modules: ["modules", "helpers"].map(i => path.join(__dirname, i))
+      modules: ["helpers", "modules"].map(i => path.join(__dirname, i))
     },
     config: {
       PORT: 8001,

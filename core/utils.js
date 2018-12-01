@@ -21,11 +21,10 @@ module.exports = {
   name: "utils",
   utils: {
     // Utils
-    injectMethods(name, inject) {
+    injectMethods(name) {
       return {
         $({ _key, _val }) {
           const key = `${name}.${_key}`;
-          const target = _.get(Mhr, key, {});
           _.set(Mhr, key, _val);
         }
       };
