@@ -1,6 +1,7 @@
 const _ = require("lodash");
 const { MongooseUtils } = require("../../../plugins/mongoose");
 const { createOne, models, done } = MongooseUtils;
+const { signJWT } = require("../../../plugins/jwt");
 
 module.exports = {
   name: "Auth",
@@ -21,7 +22,7 @@ module.exports = {
       const validPassword = await user.verifyPassword(password);
       if (validPassword) {
         delete user.password;
-        ctx.body = { user, token: ctx.signJWT({ data: user._id }) };
+        ctx.body = { user, token: signJWT({ data: user._id }) };
       } else {
         ctx.throw(401, "invalid username or password");
       }
