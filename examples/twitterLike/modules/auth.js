@@ -10,7 +10,7 @@ module.exports = {
     "post /login": ["checkLogin", "login"],
     "post /signup": done(createOne("User"))
   }),
-  controllers: {
+  methods: {
     async login(ctx) {
       const { identifier, password } = ctx.request.body;
 

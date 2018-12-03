@@ -18,7 +18,7 @@ module.exports = {
       });
     }
   },
-  controllers: {
+  methods: {
     async handleFiles(ctx) {
       ctx.body = ctx.req.files;
     }

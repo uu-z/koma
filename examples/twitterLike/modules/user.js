@@ -9,7 +9,7 @@ module.exports = {
     "get /users/:id": done(findById("User")),
     "put /users/:id": ["checkToken", done(updateById("User"))]
   }),
-  controllers: {},
+  methods: {},
   models: {
     User: {
       schema: {

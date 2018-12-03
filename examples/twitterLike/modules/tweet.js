@@ -11,7 +11,7 @@ module.exports = {
     "get /tweet/:id": done(findById("Tweet")),
     "post /tweet/": ["checkToken", "createTweet"]
   }),
-  controllers: {
+  methods: {
     async createTweet(ctx) {
       const userId = _.get(ctx.state, "user.data");
       const tweet = await models("Tweet").create({ ...ctx.request.body, author: userId });

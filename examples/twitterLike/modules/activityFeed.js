@@ -41,7 +41,7 @@ module.exports = {
       }
     }
   },
-  controllers: {
+  methods: {
     async feedList(ctx) {
       const { userId } = ctx.params;
       ctx.body = await pagination("Feed", {

@@ -12,7 +12,7 @@ module.exports = {
     "post /follow": ["checkToken|checkFollow", "follow"],
     "post /unfollow": ["checkToken|checkFollow", "unfollow"]
   }),
-  controllers: {
+  methods: {
     async followerList(ctx) {
       const { username } = ctx.params;
       const user = await models("User")

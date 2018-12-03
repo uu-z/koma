@@ -3,7 +3,7 @@ module.exports = {
   routes: {
     "get /hello": "hello"
   },
-  controllers: {
+  methods: {
     async hello(ctx) {
       ctx.body = "Hello World";
     }

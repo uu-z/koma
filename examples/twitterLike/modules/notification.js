@@ -8,7 +8,7 @@ module.exports = {
   routes: ({}) => ({
     "get /notification/:username": "NotificationList"
   }),
-  controllers: {
+  methods: {
     async NotificationList(ctx) {
       const { username } = ctx.params;
       const user = await models("User")

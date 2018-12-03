@@ -3,5 +3,5 @@ const { utils } = require("./utils");
 
 module.exports = {
   name: "Controller",
-  $controllers: utils.injectMethods("methods")
+  $methods: utils.injectMethods("methods")
 };

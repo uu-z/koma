@@ -9,7 +9,7 @@ module.exports = {
   routes: () => ({
     "post /comment": ["checkToken|checkComment", "comment"]
   }),
-  controllers: {
+  methods: {
     async comment(ctx) {
       const commentAuthor = _.get(ctx.state, "user.data");
       const { postId, postType, text } = ctx.request.body;
