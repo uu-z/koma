@@ -26,6 +26,39 @@ koma.$use({
 });
 ```
 
+### Typescript
+
+```js
+import { MongooseUtils } from "koma/plugins/mongoose";
+const { models } = MongooseUtils;
+import bp from "koma/plugins/blueprint";
+
+export default class Index {
+  routes = {
+    "get /": "testFindOne",
+    "post /": "testCreateOne"
+  };
+
+  @bp.method()
+  async testFindOne(ctx: any) {
+    ctx.body = await models("Test").findOne(ctx.query);
+  }
+
+  @bp.method()
+  async testCreateOne(ctx: any) {
+    ctx.body = await models("Test").create(ctx.request.body);
+  }
+
+  models = {
+    Test: {
+      schema: {
+        text: { type: "string" }
+      }
+    }
+  };
+}
+```
+
 ### Advanced Example
 
 after start advanced example. you can open `http://localhost:8001/playground` to play with graphql playground
@@ -83,37 +116,4 @@ module.exports = {
     }
   }
 };
-```
-
-### Typescript
-
-```js
-import { MongooseUtils } from "koma/plugins/mongoose";
-const { models } = MongooseUtils;
-import bp from "koma/plugins/blueprint";
-
-export default class Index {
-  routes = {
-    "get /": "testFindOne",
-    "post /": "testCreateOne"
-  };
-
-  @bp.method()
-  async testFindOne(ctx: any) {
-    ctx.body = await models("Test").findOne(ctx.query);
-  }
-
-  @bp.method()
-  async testCreateOne(ctx: any) {
-    ctx.body = await models("Test").create(ctx.request.body);
-  }
-
-  models = {
-    Test: {
-      schema: {
-        text: { type: "string" }
-      }
-    }
-  };
-}
 ```
