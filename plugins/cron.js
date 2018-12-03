@@ -1,5 +1,5 @@
 const Cron = require("cron");
-const { utils } = require("../core/utils");
+const { utils } = require("../packages/core/utils");
 const Mhr = require("menhera").default;
 const _ = require("lodash");
 

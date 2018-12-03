@@ -5,7 +5,7 @@ const { schemaComposer, TypeComposer } = require("graphql-compose");
 const _ = require("lodash");
 const graphqlHTTP = require("koa-graphql");
 const koaPlayground = require("graphql-playground-middleware-koa").default;
-const { utils } = require("../core/utils");
+const { utils } = require("../packages/core/utils");
 
 const {
   GRAPHQL: {

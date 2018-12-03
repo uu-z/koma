@@ -1,10 +1,9 @@
 const Mhr = require("menhera").default;
-const { utils } = require("./core/utils");
+const { utils } = require("./packages/core/utils");
 const _ = require("lodash");
 const path = require("path");
-const { setting, config } = require("./config");
+const { setting } = require("./config");
 
-exports.config = config;
 exports.koma = Mhr.$use({
   $mount: {
     $({ _val }) {
@@ -16,5 +15,5 @@ exports.koma = Mhr.$use({
     }
   }
 })
-  .$use(utils.load(path.resolve(__dirname, "./core")))
+  .$use(utils.load(path.resolve(__dirname, "./packages/core")))
   .$use(setting);

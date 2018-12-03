@@ -101,11 +101,17 @@ module.exports = {
               return load && depends_valid;
             },
             mapValue(v, b) {
+              if (v.load && v.load == false) {
+                return {};
+              }
               if (v.ignore) {
                 v = _.omit(v, v.ignore);
               }
+              if (typeof v.default == "function") {
+                v.default = v.default();
+              }
 
-              return v;
+              return v.default || v;
             }
           })
         )

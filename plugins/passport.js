@@ -1,7 +1,7 @@
 const Mhr = require("menhera").default;
 const localStrategy = require("passport-local").Strategy;
 const passport = require("koa-passport");
-const { utils } = require("../core/utils");
+const { utils } = require("../packages/core/utils");
 
 passport.serializeUser((user, done) => {
   done(null, user);

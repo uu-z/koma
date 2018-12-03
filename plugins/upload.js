@@ -1,7 +1,7 @@
 const Mhr = require("menhera").default;
 const multer = require("koa-multer");
 const static = require("koa-static");
-const { utils } = require("../core/utils");
+const { utils } = require("../packages/core/utils");
 const path = require("path");
 const crypto = require("crypto");
 
