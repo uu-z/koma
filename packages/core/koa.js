@@ -8,6 +8,8 @@ exports.app = app;
 module.exports = {
   name: "App",
   $use: utils.injectArray("use"),
+  $methods: utils.injectMethods("methods"),
+  metas: utils.injectObjectDeep("metas"),
   $start: {
     // lifecycle
     metas: utils.injectObjectDeep("metas"),

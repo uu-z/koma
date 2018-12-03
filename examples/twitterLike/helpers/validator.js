@@ -1,5 +1,5 @@
 module.exports = {
-  validators: {
+  methods: {
     async checkToken(ctx, next) {
       const userId = _.get(ctx.state, "user.data");
       if (!userId) {

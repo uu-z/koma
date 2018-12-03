@@ -1,5 +1,4 @@
 const Mhr = require("menhera").default;
-const { $set } = require("menhera");
 const { utils } = require("./utils");
 const _ = require("lodash");
 const compose = require("koa-compose");
@@ -24,13 +23,6 @@ module.exports = {
         objRoutes = { ...objRoutes, ...fn(methods) };
       });
       this.RouterUtils.InjectObjectRoutes({ routes: objRoutes, app });
-
-      // $set(Mhr, {
-      //   methods: undefined,
-      //   routes: undefined,
-      //   routes_F: undefined,
-      //   use: undefined
-      // });
     }
   },
   RouterUtils: {
