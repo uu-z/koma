@@ -1,6 +1,6 @@
 {
   "name": "koma",
-  "version": "0.1.4",
+  "version": "0.1.5-rc1",
   "main": "index.js",
   "scripts": {
     "start": "nodemon -L examples/simple/app.js",
@@ -23,6 +23,7 @@
     "@types/passport": "^0.4.7",
     "@types/signale": "^1.2.0",
     "api-query-params": "^4.8.1",
+    "apollo-server-koa": "^2.2.6",
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "busboy": "^0.2.14",
@@ -35,6 +36,7 @@
     "graphql-compose-mongoose": "^5.1.1",
     "graphql-compose-pagination": "^4.0.0",
     "graphql-playground-middleware-koa": "^1.6.8",
+    "graphql-tools": "^4.0.3",
     "ioredis": "^4.2.0",
     "joi": "^14.0.6",
     "joi-json": "^2.1.0",
