@@ -1,7 +1,7 @@
 const Mhr = require("menhera").default;
 const mongoose = require("mongoose");
 const { composeWithMongoose } = require("graphql-compose-mongoose/node8");
-const { schemaComposer, TypeComposer } = require("graphql-compose");
+const { schemaComposer, Resolver } = require("graphql-compose");
 const _ = require("lodash");
 const graphqlHTTP = require("koa-graphql");
 const koaPlayground = require("graphql-playground-middleware-koa").default;
@@ -29,6 +29,30 @@ const {
 module.exports = {
   name: "Graphql",
   $graphql: utils.injectObjectDeep("graphql"),
+  $gql: {
+    Query:{
+      $({_key,_val}){
+        _.set(Mhr, `graphqlSchmas.${_key}`, {
+          kind: "Query",
+          resolver: new Resolver({
+            name: _key,
+            ..._val
+          })
+        })
+      }
+    },
+    Mutation:{
+      $({_key,_val}){
+        _.set(Mhr, `graphqlSchmas.${_key}`, {
+          kind: "Mutation",
+          resolver: new Resolver({
+            name: _key,
+            ..._val
+          })
+        })
+      }
+    }
+  },
   $start: {
     router() {
       if (genSchemaFromMongoose) {
