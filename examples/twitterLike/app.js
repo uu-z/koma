@@ -5,7 +5,7 @@ koma.$use({
   start: {
     metas: {
       mongoose: { load: true },
-      graphql: { load: true, depends_on: ["mongoose"] },
+      "graphql-compose": { load: true },
       redis: { load: true },
       elasticsearch: { load: true },
       kue: { load: true },
