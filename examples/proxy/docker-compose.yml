@@ -1,0 +1,37 @@
+version: "2"
+services:
+  py:
+    # image: "koishii/proxy"
+    build: .
+    labels:
+      - traefik.frontend.rule=Host:py.yuyuko.me
+      - traefik.docker.network=proxy
+      - traefik.port=8001
+    environment:
+      - PORT=8001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./:/home/node/app
+    networks:
+      - proxy
+    ports:
+      - 8001:8001
+    depends_on:
+      - redis
+  redis:
+    image: redis:alpine
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+volumes:
+  redis-data:
+
+networks:
+  proxy:
+    external:
+      name: proxy
