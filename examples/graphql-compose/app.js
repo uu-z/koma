@@ -5,7 +5,7 @@ koma.$use({
   start: {
     metas: {
       mongoose: { load: true },
-      "graphql-compose": { load: true },
+      graphql: { load: true },
       jwt: { load: true }
     },
     load: {

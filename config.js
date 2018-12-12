@@ -79,7 +79,7 @@ const settings = {
         logger: { load: false },
         kue: { load: false },
         cron: { load: false },
-        "graphql-compose": { load: false, depends_on: ["mongoose"] },
+        graphql: { load: false, depends_on: ["mongoose"] },
         mongoose: { load: false },
         redis: { load: false },
         "redis-cache": { load: false },
