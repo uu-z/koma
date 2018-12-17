@@ -15,13 +15,13 @@ module.exports = {
           const account = await models("Account")
             .findOne({ $or: [{ username: identifier }] })
             .select("+password");
-          if (!account) throw new Error("用户不存在");
+          if (!account) throw new Error("No user founded");
           const validPassword = await account.verifyPassword(password);
           if (validPassword) {
             delete account.password;
             return { account, jwt: signJWT({ _id: account._id, role: account.role }) };
           } else {
-            throw new Error("用户名或密码错误");
+            throw new Error("Invalid password or username");
           }
         }
       },
