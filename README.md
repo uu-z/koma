@@ -26,88 +26,53 @@ koma.$use({
 });
 ```
 
-### Typescript
-
-```js
-import { MongooseUtils } from "koma/plugins/mongoose";
-const { models } = MongooseUtils;
-import bp from "koma/plugins/blueprint";
-
-export default class Index {
-  routes = {
-    "get /": "testFindOne",
-    "post /": "testCreateOne"
-  };
-
-  @bp.method()
-  async testFindOne(ctx: any) {
-    ctx.body = await models("Test").findOne(ctx.query);
-  }
-
-  @bp.method()
-  async testCreateOne(ctx: any) {
-    ctx.body = await models("Test").create(ctx.request.body);
-  }
-
-  models = {
-    Test: {
-      schema: {
-        text: { type: "string" }
-      }
-    }
-  };
-}
-```
-
-### Advanced Example
-
-after start advanced example. you can open `http://localhost:8001/playground` to play with graphql playground
-
-```js
-const { koma, config } = require("../../index");
-const path = require("path");
-
-koma.$use({
-  start: {
-    metas: {
-      mongoose: { load: true },
-      graphql: { load: true, depends_on: ["mongoose"] },
-      redis: { load: true },
-      elasticsearch: { load: true },
-      kue: { load: true }
-    },
-    load: {
-      plugins: [],
-      modules: ["modules", "helpers"].map(i => path.join(__dirname, i))
-    },
-    config: {
-      PORT: 8001,
-      KUE_PORT: 8002,
-      RUN: true
-    }
-  }
-});
-```
+### Graphql-compose
 
 ```js
 const _ = require("lodash");
-const { MongooseUtils, mongoose } = require("koma/plugins/mongoose");
-const { findById, pagination, updateById, done, models } = MongooseUtils;
+const { MongooseUtils } = require("koma/plugins/mongoose");
+const { models } = MongooseUtils;
+const { signJWT } = require("koma/plugins/jwt");
 
 module.exports = {
   name: "User",
-  routes: () => ({
-    "get /users": done(pagination("User")),
-    "get /users/:id": done(findById("User")),
-    "put /users/:id": ["checkToken", done(updateById("User"))]
-  }),
-  methods: {},
+  gql: {
+    Mutation: {
+      Login: {
+        type: `type Login {account: Account!, jwt: String!}`,
+        args: { identifier: "String!", password: "String!" },
+        resolve: async ({ args }) => {
+          const { identifier, password } = args;
+          const account = await models("Account")
+            .findOne({ $or: [{ username: identifier }] })
+            .select("+password");
+          if (!account) throw new Error("用户不存在");
+          const validPassword = await account.verifyPassword(password);
+          if (validPassword) {
+            delete account.password;
+            return { account, jwt: signJWT({ _id: account._id, role: account.role }) };
+          } else {
+            throw new Error("用户名或密码错误");
+          }
+        }
+      },
+      SignUp: {
+        type: `type User {username: String!}`,
+        args: {
+          username: "String!",
+          password: "String!"
+        },
+        resolve: async ({ args }) => {
+          const user = await models("Account").create(args);
+          return user;
+        }
+      }
+    }
+  },
   models: {
-    User: {
+    Account: {
       schema: {
-        nickname: { type: "string" },
         username: { type: "string", required: true, unique: true },
-        email: { type: "string", required: true, unique: true },
         password: { type: "string", select: false, required: true, bcrypt: true, hidden: true }
       },
       options: {

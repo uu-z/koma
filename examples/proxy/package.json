@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "koma": "^0.1.5-rc6",
+    "axios": "^0.18.0",
+    "koma": "^0.1.5-rc7",
     "menhera": "^0.8.5-rc2"
   }
 }

@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@koa/cors@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/@koa/cors/-/cors-2.2.2.tgz#9084ab7f58107734e6b19d602d99538eda73f2d0"
+  integrity sha512-Ollvsy3wB8+7R9w6hPVzlj3wekF6nK+IHpHj7faSPVXCkahqCwNEPp9+0C4b51RDkdpHjevLEGLOKuVjqtXgSQ==
+
 "@types/babel-types@*", "@types/babel-types@^7.0.0":
   version "7.0.4"
   resolved "https://registry.npmjs.org/@types/babel-types/-/babel-types-7.0.4.tgz#bfd5b0d0d1ba13e351dff65b6e52783b816826c8"
@@ -1640,11 +1645,12 @@ koa@^2.2.0:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-koma@^0.1.5-rc6:
-  version "0.1.5-rc6"
-  resolved "https://registry.npmjs.org/koma/-/koma-0.1.5-rc6.tgz#5ac6d68315d26afc2b30d14c27ce5851aab2fdec"
-  integrity sha512-dQJ1f8sNi3c0rMp6qh4WBaNro6gB6q/L6cCsZ3Lcd/LTmeFUwSNsjZ7sivFtaEM+pX1zO0pCHDur/S7rgsWKnA==
+koma@^0.1.5-rc7:
+  version "0.1.5-rc7"
+  resolved "https://registry.npmjs.org/koma/-/koma-0.1.5-rc7.tgz#fde57bc1a10dabadfd2100ccb030712fe19a5462"
+  integrity sha512-RxledOAToPSQjTq09X6EdSu2LQrPq+xIdMo8FPOgzXTvTMt99TBibOIFxqrKmmHJ9qG50e0If1nzFrfKxNjfgg==
   dependencies:
+    "@koa/cors" "^2.2.2"
     api-query-params "^4.8.1"
     axios "^0.18.0"
     bluebird "^3.5.3"

@@ -1,8 +1,8 @@
 version: "2"
 services:
   py:
-    # image: "koishii/proxy"
-    build: .
+    image: "koishii/proxy"
+    # build: .
     labels:
       - traefik.frontend.rule=Host:py.yuyuko.me
       - traefik.docker.network=proxy
