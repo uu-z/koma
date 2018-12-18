@@ -30,27 +30,12 @@ module.exports = {
   name: "Graphql",
   $graphql: utils.injectObjectDeep("graphql"),
   $gql: {
-    Query:{
-      $({_key,_val}){
-        _.set(Mhr, `graphqlSchmas.${_key}`, {
-          kind: "Query",
-          resolver: new Resolver({
-            name: _key,
-            ..._val
-          })
-        })
-      }
-    },
-    Mutation:{
-      $({_key,_val}){
-        _.set(Mhr, `graphqlSchmas.${_key}`, {
-          kind: "Mutation",
-          resolver: new Resolver({
-            name: _key,
-            ..._val
-          })
-        })
-      }
+    $({ _key: kind, _val }) {
+      _.each(_val, (v, k) => {
+        const key = `graphqlSchmas.${k}`;
+        const target = _.get(Mhr, key, {});
+        _.set(Mhr, key, { kind, ...target, ...v, resolver: new Resolver({ name: k, ...v }) });
+      });
     }
   },
   $start: {
@@ -58,7 +43,7 @@ module.exports = {
       if (genSchemaFromMongoose) {
         this.genSchemaFromMongoose();
       }
-      Mhr.$use({ hook: { graphqlSchmas: _.get(Mhr, "graphqlSchmas") } });
+      Mhr.$use({ graphqlSchmas: _.get(Mhr, "graphqlSchmas") });
 
       const graphqlSchmas = _.get(Mhr, "graphqlSchmas", {});
       _.each(_.omitBy(graphqlSchmas, _.isUndefined), (val, key) => {
@@ -74,7 +59,7 @@ module.exports = {
           }
         });
       }
-
+      // console.log(graphqlSchmas);
       _.set(Mhr, "graphqlSchmas", undefined); // remove schemas after finished to reduce memory size
     }
   },
@@ -93,13 +78,17 @@ module.exports = {
         val.forEach(field => {
           const fieldName = `${model}${_.upperFirst(field)}`;
           const resolver = types[model].getResolver(field);
-          const fieldMetas = _.get(Mhr, `graphql.metas.${fieldName}`, {});
-          _.set(Mhr, `graphqlSchmas.${fieldName}`, {
-            model,
-            kind,
-            field,
-            resolver,
-            ...fieldMetas
+          Mhr.$use({
+            gql: {
+              [kind]: {
+                [fieldName]: {
+                  model,
+                  kind,
+                  field,
+                  resolver
+                }
+              }
+            }
           });
         });
       });

@@ -1,15 +1,24 @@
 const _ = require("lodash");
+const Mhr = require("menhera").default;
 const { MongooseUtils } = require("../../../plugins/mongoose");
 const { models } = MongooseUtils;
 const { signJWT } = require("../../../plugins/jwt");
 
 module.exports = {
   name: "User",
+  $graphqlSchmas: {
+    $({ _val, _key }) {
+      if (_val.hide) {
+        _.set(Mhr, `graphqlSchmas.${_key}`, undefined);
+      }
+    }
+  },
   gql: {
     Mutation: {
       Login: {
         type: `type Login {account: Account!, jwt: String!}`,
         args: { identifier: "String!", password: "String!" },
+        hide: true,
         resolve: async ({ args }) => {
           const { identifier, password } = args;
           const account = await models("Account")
