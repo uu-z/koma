@@ -7,7 +7,7 @@ const app = new Koa();
 exports.app = app;
 module.exports = {
   name: "App",
-  $use: utils.injectArray("use"),
+  $use: utils.injectArray("_use"),
   $methods: utils.injectMethods("methods"),
   metas: utils.injectObjectDeep("metas"),
   $start: {
@@ -33,7 +33,7 @@ module.exports = {
       }
     },
     app() {
-      const use = _.get(Mhr, "use", []);
+      const use = _.get(Mhr, "_use", []);
       use.forEach(val => {
         app.use(val);
       });

@@ -28,14 +28,25 @@ const {
 
 module.exports = {
   name: "Graphql",
-  $graphql: utils.injectObjectDeep("graphql"),
   $gql: {
-    $({ _key: kind, _val }) {
-      _.each(_val, (v, k) => {
-        const key = `graphqlSchmas.${k}`;
-        const target = _.get(Mhr, key, {});
-        _.set(Mhr, key, { kind, ...target, ...v, resolver: new Resolver({ name: k, ...v }) });
-      });
+    middlewares: {
+      $: [
+        ({ _val, _key }) => {
+          if (_val.hide) {
+            const key = `gql.resolvers.${_key}`;
+            _.set(Mhr, key, undefined);
+          }
+        }
+      ]
+    },
+    resolvers: {
+      $({ _key: kind, _val }) {
+        _.each(_val, (v, k) => {
+          const key = `gql.resolvers.${k}`;
+          const target = _.get(Mhr, key, {});
+          _.set(Mhr, key, { kind, ...target, ...v, resolver: new Resolver({ name: k, ...v }) });
+        });
+      }
     }
   },
   $start: {
@@ -43,10 +54,15 @@ module.exports = {
       if (genSchemaFromMongoose) {
         this.genSchemaFromMongoose();
       }
-      Mhr.$use({ graphqlSchmas: _.get(Mhr, "graphqlSchmas") });
 
-      const graphqlSchmas = _.get(Mhr, "graphqlSchmas", {});
-      _.each(_.omitBy(graphqlSchmas, _.isUndefined), (val, key) => {
+      const { resolvers } = _.get(Mhr, "gql", {});
+      Mhr.$use({
+        gql: {
+          middlewares: resolvers
+        }
+      });
+
+      _.each(_.omitBy(resolvers, _.isUndefined), (val, key) => {
         schemaComposer[val.kind].addFields({ [key]: val.resolver });
       });
 
@@ -60,7 +76,7 @@ module.exports = {
         });
       }
       // console.log(graphqlSchmas);
-      _.set(Mhr, "graphqlSchmas", undefined); // remove schemas after finished to reduce memory size
+      _.set(Mhr, "gql.resolvers", undefined); // remove schemas after finished to reduce memory size
     }
   },
   genSchemaFromMongoose() {
@@ -80,12 +96,14 @@ module.exports = {
           const resolver = types[model].getResolver(field);
           Mhr.$use({
             gql: {
-              [kind]: {
-                [fieldName]: {
-                  model,
-                  kind,
-                  field,
-                  resolver
+              resolvers: {
+                [kind]: {
+                  [fieldName]: {
+                    model,
+                    kind,
+                    field,
+                    resolver
+                  }
                 }
               }
             }

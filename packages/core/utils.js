@@ -37,6 +37,15 @@ module.exports = {
         }
       };
     },
+    injectHooks(name) {
+      return {
+        _({ _val }) {
+          Mhr.$use({
+            [`$${name}`]: _val
+          });
+        }
+      };
+    },
     injectObject(name) {
       return {
         O({ _val }) {

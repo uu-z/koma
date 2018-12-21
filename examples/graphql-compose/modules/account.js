@@ -6,43 +6,38 @@ const { signJWT } = require("../../../plugins/jwt");
 
 module.exports = {
   name: "User",
-  $graphqlSchmas: {
-    $({ _val, _key }) {
-      if (_val.hide) {
-        _.set(Mhr, `graphqlSchmas.${_key}`, undefined);
-      }
-    }
-  },
   gql: {
-    Mutation: {
-      Login: {
-        type: `type Login {account: Account!, jwt: String!}`,
-        args: { identifier: "String!", password: "String!" },
-        hide: true,
-        resolve: async ({ args }) => {
-          const { identifier, password } = args;
-          const account = await models("Account")
-            .findOne({ $or: [{ username: identifier }] })
-            .select("+password");
-          if (!account) throw new Error("No user founded");
-          const validPassword = await account.verifyPassword(password);
-          if (validPassword) {
-            delete account.password;
-            return { account, jwt: signJWT({ _id: account._id, role: account.role }) };
-          } else {
-            throw new Error("Invalid password or username");
+    resolvers: {
+      Mutation: {
+        Login: {
+          type: `type Login {account: Account!, jwt: String!}`,
+          args: { identifier: "String!", password: "String!" },
+          hide: true,
+          resolve: async ({ args }) => {
+            const { identifier, password } = args;
+            const account = await models("Account")
+              .findOne({ $or: [{ username: identifier }] })
+              .select("+password");
+            if (!account) throw new Error("No user founded");
+            const validPassword = await account.verifyPassword(password);
+            if (validPassword) {
+              delete account.password;
+              return { account, jwt: signJWT({ _id: account._id, role: account.role }) };
+            } else {
+              throw new Error("Invalid password or username");
+            }
           }
-        }
-      },
-      SignUp: {
-        type: `type User {username: String!}`,
-        args: {
-          username: "String!",
-          password: "String!"
         },
-        resolve: async ({ args }) => {
-          const user = await models("Account").create(args);
-          return user;
+        SignUp: {
+          type: `type User {username: String!}`,
+          args: {
+            username: "String!",
+            password: "String!"
+          },
+          resolve: async ({ args }) => {
+            const user = await models("Account").create(args);
+            return user;
+          }
         }
       }
     }
