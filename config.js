@@ -20,7 +20,6 @@ const config = {
   REDIS_HOST,
   REDIS_PORT,
   MONGO_URL,
-  MONGO_DATABASE,
   KUE_PORT,
   JWT: {
     SECRET: "secred",
