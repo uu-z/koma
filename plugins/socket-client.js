@@ -6,7 +6,7 @@ let client;
 module.exports = {
   name: "SocketClient",
   $start: {
-    socketServer() {
+    io() {
       client = IO_Client(`http://${Mhr.config.HOST}:${Mhr.config.PORT}`);
       client.on("connect", () => {
         console.info("socket-client:", "connected");

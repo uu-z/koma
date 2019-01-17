@@ -9,7 +9,6 @@ const {
   REDIS_PORT = 6379,
   KUE_PORT = 8002,
   MONGO_URL = "localhost:27017",
-  MONGO_DATABASE = "test"
 } = process.env;
 
 const config = {
@@ -38,7 +37,7 @@ const config = {
     genSchemaFromMongoose: true
   },
   MONGOOSE: {
-    dburl: `mongodb://${MONGO_URL}/${MONGO_DATABASE}`,
+    dburl: `mongodb://${MONGO_URL}`,
     plugins: {},
     options: {
       useCreateIndex: true,

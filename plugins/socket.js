@@ -1,11 +1,8 @@
 const Mhr = require("menhera").default;
 const _ = require("lodash");
-const IO = require("koa-socket.io");
+const IO = require("socket.io");
 const { utils } = require("../packages/core/utils");
 
-const io = new IO({
-  namespace: "/"
-});
 
 module.exports = {
   name: "Socket",
@@ -26,16 +23,20 @@ module.exports = {
   },
   ScoketUtils: {
     InjectSocket({ server }) {
-      io.start(server);
       const datas = _.get(Mhr, "io.on", {});
-      _.each(datas, (val, key) => {
-        io.on(key, val);
-      });
-
+      const io = IO(server)
+      io.on("connection", socket => {
+        _.each(datas, (val, key) => {
+          socket.on(key, data => {
+            val({data, socket})
+          });
+        });
+      })
+      
       console.success("socket server start~~~");
       Mhr.$use({
         start: {
-          socketServer: io
+          io
         }
       });
     }
