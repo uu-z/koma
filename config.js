@@ -8,7 +8,7 @@ const {
   REDIS_HOST = "localhost",
   REDIS_PORT = 6379,
   KUE_PORT = 8002,
-  MONGO_URL = "localhost:27017",
+  MONGO_URL = "localhost:27017/test"
 } = process.env;
 
 const config = {

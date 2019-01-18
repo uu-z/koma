@@ -2680,10 +2680,10 @@ memory-pager@^1.0.2:
   resolved "https://registry.npmjs.org/memory-pager/-/memory-pager-1.3.1.tgz#1153d2f5e157a407a436bf54ccf4139037515866"
   integrity sha512-pUf/sGkym2WqFZYTVmdASnSbNfpGc9rwxEHOePx4lT/fD+NHGL1U16Uy4o6PMiVcDv4mp6MI/vaF0c/Kd1QEUQ==
 
-menhera@^0.9.5:
-  version "0.9.5"
-  resolved "https://registry.npmjs.org/menhera/-/menhera-0.9.5.tgz#c6ffeb05a32408d945587ff1e77d12007c7ad013"
-  integrity sha512-MLDhV5fhXchFtz8G2WC4UGEv1X88uXDyraijbajNlHSRgxXCyERtcAHJ4joJY/cpT4oe0qQXn/l+wybAc4khUg==
+menhera@^0.9.6:
+  version "0.9.6"
+  resolved "https://registry.npmjs.org/menhera/-/menhera-0.9.6.tgz#b484668413f42017d9853757bf4aa06fbe0a2b36"
+  integrity sha512-DSsUbc+2jNOzfeHJe68R2N0hDQ4Lv7vH1iLwH2qHTy//vNXj2tvde0xA+FGYd/znGary0ZopJP1w7gfxO6y9QA==
   dependencies:
     lodash.get "^4.4.2"
     lodash.has "^4.5.2"

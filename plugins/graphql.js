@@ -1,11 +1,11 @@
 const Mhr = require("menhera").default;
+const { aSet } = require("menhera");
 const mongoose = require("mongoose");
 const { composeWithMongoose } = require("graphql-compose-mongoose/node8");
 const { schemaComposer, Resolver } = require("graphql-compose");
 const _ = require("lodash");
 const graphqlHTTP = require("koa-graphql");
 const koaPlayground = require("graphql-playground-middleware-koa").default;
-const { utils } = require("../packages/core/utils");
 
 const {
   GRAPHQL: {
@@ -43,8 +43,11 @@ module.exports = {
       $({ _key: kind, _val }) {
         _.each(_val, (v, k) => {
           const key = `gql.resolvers.${k}`;
-          const target = _.get(Mhr, key, {});
-          _.set(Mhr, key, { kind, ...target, ...v, resolver: new Resolver({ name: k, ...v }) });
+          aSet(Mhr, {
+            [key]: ({ tar }) => {
+              return { kind, ...tar, ...v };
+            }
+          });
         });
       }
     }
@@ -62,8 +65,14 @@ module.exports = {
         }
       });
 
-      _.each(_.omitBy(resolvers, _.isUndefined), (val, key) => {
+      const _resolvers = _.omitBy(resolvers, _.isUndefined);
+
+      _.each(_.omitBy(_resolvers, v => !v.resolver), (val, key) => {
         schemaComposer[val.kind].addFields({ [key]: val.resolver });
+      });
+
+      _.each(_.omitBy(_resolvers, v => v.resolver), (val, key) => {
+        schemaComposer[val.kind].addFields({ [key]: new Resolver({ name: key, ...val }) });
       });
 
       if (schemaComposer.size > 0) {
